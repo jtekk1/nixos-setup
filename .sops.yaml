@@ -1,0 +1,53 @@
+# SOPS configuration for NixSetups
+# This file defines which keys can decrypt which secrets
+
+keys:
+  # Admin keys (your personal key for managing secrets)
+  - &admin_jtekk age1spdlcpgj0jkn2nrl5zcqfa8qk98x58nj7e7fxkejxrwz2mfhg5gsdd7f75  # deepspace admin key
+
+  # Server SSH host keys (derived from ed25519 host keys)
+  # Generated with: ssh-keyscan <ip> 2>/dev/null | ssh-to-age
+  # Updated 2024-11-25 after nixos-anywhere deployment
+  - &beelink age19qw8xemxmw8lz8anf8hmt8cszdgjum8lkfpva282m7v2vhytyg5qgn9sd7   # 192.168.0.251
+  - &mini_me age1sdudkmz75qunceh6grmmu8ydzhgrksw9v58su8nrsywwdy4q7afqfydj6f   # 192.168.0.250
+  - &tank age18vu6xcqdk2rmcxs3fnszuu70qqcm7uwpzalren2wks23jk2tjpsq9k5qdk      # 192.168.0.252
+  - &deli age14sjsw62qfx535s85y259sqdc3ke3rmy6gyaf3egy5ruy2upefdhquxdfr6      # 192.168.0.253
+
+creation_rules:
+  # Default: all secrets can be decrypted by admin and all servers
+  - path_regex: secrets/[^/]+\.yaml$
+    key_groups:
+      - age:
+          - *admin_jtekk
+          - *beelink
+          - *mini_me
+          - *tank
+          - *deli
+
+  # Server-specific secrets (one server can decrypt)
+  - path_regex: secrets/beelink/.*\.yaml$
+    key_groups:
+      - age:
+          - *admin_jtekk
+          - *beelink
+
+  - path_regex: secrets/mini-me/.*\.yaml$
+    key_groups:
+      - age:
+          - *admin_jtekk
+          - *mini_me
+
+  - path_regex: secrets/tank/.*\.yaml$
+    key_groups:
+      - age:
+          - *admin_jtekk
+          - *tank
+
+  - path_regex: secrets/deli/.*\.yaml$
+    key_groups:
+      - age:
+          - *admin_jtekk
+          - *deli
+
+# NOTE: SSH host keys are converted to age format using:
+# nix shell nixpkgs#ssh-to-age --command sh -c 'ssh-keyscan HOST 2>/dev/null | ssh-to-age'

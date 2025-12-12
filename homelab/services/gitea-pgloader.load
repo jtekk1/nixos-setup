@@ -1,0 +1,89 @@
+/*
+ * pgloader config for Gitea SQLite to PostgreSQL migration
+ * Handles boolean type conversions and skips schema creation
+ */
+
+LOAD DATABASE
+    FROM sqlite:///var/lib/gitea/data/gitea.db
+    INTO postgresql:///gitea
+
+WITH
+    data only,                    -- Don't create schema, just copy data
+    reset sequences,              -- Reset auto-increment sequences after import
+    truncate                      -- Clear existing data first
+
+CAST
+    type integer when (= "is_active" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "is_admin" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "is_deleted" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "is_private" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "is_public" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "is_closed" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "is_locked" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "is_archived" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "is_fork" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "is_template" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "is_mirror" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "is_empty" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "is_fsck_enabled" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "is_bare" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "is_pull" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "is_system_webhook" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "is_sync_enabled" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "is_restricted" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "is_review" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "is_official" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "is_primary" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "is_activated" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "prohibit_login" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "allow_git_hook" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "allow_import_local" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "allow_create_organization" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "repo_admin_change_team_access" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "keep_email_private" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "keep_activity_private" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "email_notifications_preference" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "enable_repo_unit_hints" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "visibility" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "enable_prune" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "confidential_client" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "skip_secondary_authorization" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "has_issues" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "has_wiki" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "has_pull_requests" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "has_projects" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "has_releases" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "has_packages" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "has_actions" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "ignore_whitespace_conflicts" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "allow_merge" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "allow_rebase" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "allow_rebase_merge" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "allow_squash_merge" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "allow_fast_forward_only_merge" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "allow_rebase_update" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "default_delete_branch_after_merge" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "default_allow_maintainer_edit" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "autodetect_manual_merge" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "clone_warning" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "can_create_org_repo" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "can_write" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "includes_all_repositories" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "privileged" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "enabled" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "need_approval" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "approved" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "resolved" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "invalidated" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "hide_archive_links" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "is_prerelease" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "is_tag" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "is_draft" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "line_invalidate" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "is_read" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "has_merged" column-name) to boolean using tinyint-to-boolean,
+    type integer when (= "is_internal" column-name) to boolean using tinyint-to-boolean
+
+EXCLUDING TABLE NAMES LIKE 'sqlite_sequence'
+
+;
