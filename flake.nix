@@ -18,7 +18,7 @@
     };
 
     mangowc = {
-      url = "github:DreamMaoMao/mangowc/0.10.7";
+      url = "github:DreamMaoMao/mangowc";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -136,13 +136,12 @@
         "beelink" = mkServer { hostname = "beelink"; };
         "mini-me" = mkServer { hostname = "mini-me"; };
         "tank" = mkServer { hostname = "tank"; };
-      } // lib.genAttrs (map (t: "deepspace-${t}") themes)
-        (name:
-          let theme = lib.removePrefix "deepspace-" name;
-          in mkSystem {
-            hostname = "deepspace";
-            inherit theme;
-          });
+      } // lib.genAttrs (map (t: "deepspace-${t}") themes) (name:
+        let theme = lib.removePrefix "deepspace-" name;
+        in mkSystem {
+          hostname = "deepspace";
+          inherit theme;
+        });
 
       colmena = import ./hive.nix {
         inherit nixpkgs home-manager disko inputs system_arch;

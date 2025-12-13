@@ -5,6 +5,7 @@
   "neuro-fusion"
   "icy-blue"
   "hakker"
+  "ember-knight"
 
   # Core Collection
   "catppuccin"
