@@ -4,9 +4,13 @@
 
 {
   # Core color palette - Backgrounds & Panels
-  bg_primary = "#FFEDC2"; # Bright White
-  bg_secondary = "#1B2229"; # Deep Shadow
-  bg_tertiary = "#2D363E"; # Forest blue-grey
+  bg_primary = "#1B2229"; # Deep shadow
+  bg_secondary = "#2D363E"; # Forest blue-grey
+  bg_tertiary = "#4D5A66"; # Dark slate
+
+ # bg_primary = "#FFEDC2"; # Bright White
+ # bg_secondary = "#1B2229"; # Deep Shadow
+ # bg_tertiary = "#2D363E"; # Forest blue-grey
 
   # Text & UI
   fg_primary = "#F0F3F5"; # White fur highlight

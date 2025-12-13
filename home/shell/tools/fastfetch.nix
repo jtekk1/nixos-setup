@@ -161,7 +161,7 @@ in {
       }
       {
         type = "os";
-        key = "  OS ";
+        key = "  OS ";
         keyIcon = "";
         keyColor = colors.accent_primary;
         format = "{3}";

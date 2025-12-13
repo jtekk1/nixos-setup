@@ -2,9 +2,6 @@
 
 let
   colors = config.theme.colors;
-
-  # Helper to strip # from hex colors for vim
-  stripHash = color: lib.removePrefix "#" color;
 in
 {
   imports = [
@@ -21,22 +18,22 @@ in
     colorschemes.base16 = {
       enable = true;
       colorscheme = {
-        base00 = stripHash colors.bg_primary;      # Default Background
-        base01 = stripHash colors.bg_secondary;    # Lighter Background
-        base02 = stripHash colors.bg_tertiary;     # Selection Background
-        base03 = stripHash colors.fg_dim;          # Comments, Invisibles
-        base04 = stripHash colors.fg_secondary;    # Dark Foreground
-        base05 = stripHash colors.fg_primary;      # Default Foreground
-        base06 = stripHash colors.fg_primary;      # Light Foreground
-        base07 = stripHash colors.color15;         # Light Background
-        base08 = stripHash colors.color1;          # Variables, XML Tags
-        base09 = stripHash colors.accent_tertiary; # Integers, Booleans
-        base0A = stripHash colors.color3;          # Classes, Search Highlight
-        base0B = stripHash colors.color2;          # Strings
-        base0C = stripHash colors.accent_secondary;# Regex, Escape Chars
-        base0D = stripHash colors.accent_primary;  # Functions, Methods
-        base0E = stripHash colors.color5;          # Keywords, Storage
-        base0F = stripHash colors.color1;          # Deprecated
+        base00 = colors.bg_primary;      # Default Background
+        base01 = colors.bg_secondary;    # Lighter Background
+        base02 = colors.bg_tertiary;     # Selection Background
+        base03 = colors.fg_dim;          # Comments, Invisibles
+        base04 = colors.fg_secondary;    # Dark Foreground
+        base05 = colors.fg_primary;      # Default Foreground
+        base06 = colors.fg_primary;      # Light Foreground
+        base07 = colors.color15;         # Light Background
+        base08 = colors.color1;          # Variables, XML Tags
+        base09 = colors.accent_tertiary; # Integers, Booleans
+        base0A = colors.color3;          # Classes, Search Highlight
+        base0B = colors.color2;          # Strings
+        base0C = colors.accent_secondary;# Regex, Escape Chars
+        base0D = colors.accent_primary;  # Functions, Methods
+        base0E = colors.color5;          # Keywords, Storage
+        base0F = colors.color1;          # Deprecated
       };
     };
 

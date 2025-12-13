@@ -3,6 +3,7 @@
 {
   imports = [
     ./close-all-windows.nix
+    ./dpms-control.nix
     ./launch-steam.nix
     ./list-my-themes.nix
     ./open-terminal.nix
