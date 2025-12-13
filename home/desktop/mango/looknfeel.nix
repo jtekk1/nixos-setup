@@ -3,7 +3,6 @@
 let
   colors = config.theme.colors;
   # Use mango format (0xRRGGBBaa) for colors
-  # Check if we have Mango-specific overrides for neuro-fusion theme
   useOverrides = config.theme.name == "neuro-fusion" && colors.mangoOverrides
     != null;
 
@@ -34,9 +33,9 @@ in {
 
     # Effects (blur disabled by default in mango-config, but we enable it)
     blur=1
-    blur_layer=0
+    blur_layer=1
     blur_optimized=1
-    blur_params_num_passes=2
+    blur_params_num_passes=3
     blur_params_radius=5
     blur_params_noise=0.02
     blur_params_brightness=0.9
@@ -44,7 +43,7 @@ in {
     blur_params_saturation=1.2
 
     shadows=1
-    layer_shadows=0
+    layer_shadows=1
     shadow_only_floating=0
     shadows_size=12
     shadows_blur=15
@@ -55,18 +54,18 @@ in {
     border_radius=4
     no_radius_when_single=0
     focused_opacity=1.0
-    unfocused_opacity=0.80
+    unfocused_opacity=0.70
 
     # Animation Configuration
     animations=1
-    layer_animations=0
-    animation_type_open=fade
-    animation_type_close=fade
+    layer_animations=1
+    animation_type_open=zoom
+    animation_type_close=zoom
     layer_animation_type_open=zoom
     layer_animation_type_close=zoom
     animation_fade_in=1
     animation_fade_out=1
-    tag_animation_direction=0
+    tag_animation_direction=230
     zoom_initial_ratio=0.3
     zoom_end_ratio=0.7
     fadein_begin_opacity=0.1
@@ -121,6 +120,7 @@ in {
     cursor_hide_timeout=0
     drag_tile_to_tile=1
     single_scratchpad=1
+    view_current_to_back=0
 
     # Keyboard
     repeat_rate=50
@@ -150,6 +150,7 @@ in {
     scratchpad_width_ratio=0.8
     scratchpad_height_ratio=0.9
     borderpx=3
+
     # Theme colors
     rootcolor=${rootColor}
     bordercolor=${borderColor}

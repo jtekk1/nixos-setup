@@ -15,5 +15,5 @@
 
     # Projector: Single window fullscreen focus (positioned at logical boundary: 5120/1.3 ≈ 3938)
     monitorrule=HDMI-A-2,0.55,1,tile,0,1,3938,0,1920,1080,60
-    '';
+  '';
 }

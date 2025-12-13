@@ -1,11 +1,10 @@
 { config, ... }:
 
-let
-  nixSetupsPath = "${config.home.homeDirectory}/NixSetups";
-in
-{
+let nixSetupsPath = "${config.home.homeDirectory}/NixSetups";
+in {
   # Symlink wlogout icons from NixSetups assets
-  home.file.".config/mango/wlogout/icons".source = config.lib.file.mkOutOfStoreSymlink "${nixSetupsPath}/home/assets/wlogout";
+  home.file.".config/mango/wlogout/icons".source =
+    config.lib.file.mkOutOfStoreSymlink "${nixSetupsPath}/home/assets/wlogout";
 
   # Wlogout layout configuration
   home.file.".config/mango/wlogout/layout".text = ''

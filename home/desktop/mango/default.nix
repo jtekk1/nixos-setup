@@ -2,10 +2,8 @@
 
 {
   imports = [
-    # Import the Mango WM home-manager module
     inputs.mangowc.hmModules.mango
 
-    # Import configuration modules
     ./autostart.nix
     ./bindings
     ./config.nix

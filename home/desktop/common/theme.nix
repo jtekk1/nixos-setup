@@ -1,7 +1,8 @@
-{ pkgs, config, ... }:
+{ pkgs, config, lib, ... }:
 
 let
   customIcons = pkgs.callPackage ../../../home/assets/icons { };
+  colors = config.colorScheme.palette or (import ../../../themes/neuro-fusion.nix);
 in
 {
   # Theme packages (fonts are provided by system/defaults/fonts.nix)
@@ -65,9 +66,45 @@ in
       gtk-application-prefer-dark-theme = true;
     };
 
+    gtk3.extraCss = ''
+      /* Override selection colors to match neuro-fusion theme */
+      selection,
+      *:selected,
+      *:selected:focus {
+        background-color: ${colors.selection_bg};
+        color: ${colors.selection_fg};
+      }
+
+      /* Text selection specifically */
+      textview text selection,
+      entry selection,
+      label selection {
+        background-color: ${colors.selection_bg};
+        color: ${colors.selection_fg};
+      }
+    '';
+
     gtk4.extraConfig = {
       gtk-application-prefer-dark-theme = true;
     };
+
+    gtk4.extraCss = ''
+      /* Override selection colors to match neuro-fusion theme */
+      selection,
+      *:selected,
+      *:selected:focus {
+        background-color: ${colors.selection_bg};
+        color: ${colors.selection_fg};
+      }
+
+      /* Text selection specifically */
+      textview text selection,
+      entry selection,
+      label selection {
+        background-color: ${colors.selection_bg};
+        color: ${colors.selection_fg};
+      }
+    '';
   };
 
   # Qt Theme configuration

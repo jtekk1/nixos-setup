@@ -13,4 +13,4 @@
     env=QT_QPA_PLATFORM,wayland
     env=GDK_BACKEND,wayland
   '';
-} 
+}
