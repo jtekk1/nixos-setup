@@ -59,21 +59,21 @@ in {
     # Animation Configuration
     animations=1
     layer_animations=1
-    animation_type_open=zoom
-    animation_type_close=zoom
-    layer_animation_type_open=zoom
-    layer_animation_type_close=zoom
+    animation_type_open=slide
+    animation_type_close=slide
+    layer_animation_type_open=slide
+    layer_animation_type_close=slide
     animation_fade_in=1
     animation_fade_out=1
-    tag_animation_direction=230
+    tag_animation_direction=250
     zoom_initial_ratio=0.3
     zoom_end_ratio=0.7
     fadein_begin_opacity=0.1
-    fadeout_begin_opacity=0.8
-    animation_duration_move=130
-    animation_duration_open=130
-    animation_duration_tag=100
-    animation_duration_close=100
+    fadeout_begin_opacity=0.5
+    animation_duration_move=250
+    animation_duration_open=250
+    animation_duration_tag=250
+    animation_duration_close=250
     animation_curve_open=1.0,-0.55,0.04,1.1
     animation_curve_move=1.0,-0.55,0.04,1.1
     animation_curve_tag=1.0,-0.55,0.04,1.1
@@ -149,7 +149,7 @@ in {
     gappov=20
     scratchpad_width_ratio=0.8
     scratchpad_height_ratio=0.9
-    borderpx=3
+    borderpx=r
 
     # Theme colors
     rootcolor=${rootColor}

@@ -36,7 +36,6 @@ in {
     jq
     tldr
     tree-sitter
-    glow
     md-tui
   ];
 }

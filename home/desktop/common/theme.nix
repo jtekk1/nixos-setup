@@ -8,6 +8,7 @@ in
   # Theme packages (fonts are provided by system/defaults/fonts.nix)
   home.packages = with pkgs; [
     yaru-theme
+    candy-icons
     papirus-icon-theme
     bibata-cursors
     adwaita-qt
@@ -53,8 +54,8 @@ in
     };
 
     iconTheme = {
-      name = "Papirus-Dark";
-      package = pkgs.papirus-icon-theme;
+      name = "candy-icons";
+      package = pkgs.candy-icons;
     };
 
     font = {
@@ -128,7 +129,7 @@ in
       cursor-size = 24;
       color-scheme = "prefer-dark";
       gtk-theme = "Yaru-dark";
-      icon-theme = "Papirus-Dark";
+      icon-theme = "candy-icons";
       font-name = "Noto Sans 11";
       document-font-name = "Noto Sans 11";
       monospace-font-name = "CaskaydiaMono Nerd Font 11";

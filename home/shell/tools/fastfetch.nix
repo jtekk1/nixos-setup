@@ -1,17 +1,19 @@
 { config, pkgs, home-manager, ... }:
 
-{
+let colors = config.theme.colors;
+in {
   home.packages = [ pkgs.fastfetch ];
 
   home.file.".config/fastfetch/config.jsonc".text = builtins.toJSON {
-    "$schema" = "https://github.com/fastfetch-cli/fastfetch/raw/master/doc/json_schema.json";
+    "$schema" =
+      "https://github.com/fastfetch-cli/fastfetch/raw/master/doc/json_schema.json";
     logo = {
       type = "auto";
       source = "~/.config/fastfetch/jtekk.txt";
       color = {
-        "1" = "blue";
-        "2" = "white";
-        "3" = "red";
+        "1" = colors.accent_primary;
+        "2" = colors.accent_secondary;
+        "3" = colors.accent_tertiary;
         "4" = "";
         "5" = "";
         "6" = "";
@@ -37,12 +39,12 @@
       showErrors = false;
       disableLinewrap = true;
       hideCursor = false;
-      separator = "  ";
+      separator = "  ";
       color = {
-        keys = "";
-        title = "";
-        output = "";
-        separator = "yellow";
+        keys = colors.accent_primary;
+        title = colors.accent_secondary;
+        output = colors.fg_primary;
+        separator = colors.accent_tertiary;
       };
       brightColor = true;
       duration = {
@@ -56,10 +58,7 @@
         spaceBeforeUnit = "default";
       };
       percent = {
-        type = [
-          "num"
-          "num-color"
-        ];
+        type = [ "num" "num-color" ];
         ndigits = 0;
         color = {
           green = "32";
@@ -69,9 +68,7 @@
         spaceBeforeUnit = "default";
         width = 0;
       };
-      fraction = {
-        ndigits = 2;
-      };
+      fraction = { ndigits = 2; };
       noBuffer = false;
       key = {
         width = 12;
@@ -82,7 +79,7 @@
         ndigits = 2;
         spaceBeforeUnit = "default";
       };
-      constants = [];
+      constants = [ ];
     };
     general = {
       thread = true;
@@ -95,7 +92,7 @@
       "break"
       {
         type = "custom";
-        outputColor = "bright_cyan";
+        outputColor = colors.accent_secondary;
         keyIcon = "";
         format = " ┌───────────────── Hardware ─────────────────┐";
       }
@@ -103,54 +100,54 @@
         type = "host";
         key = " 󰪫 PC ";
         keyIcon = "";
-        keyColor = "cyan";
+        keyColor = colors.accent_secondary;
         format = "Custom Built";
       }
       {
         type = "chassis";
-           key = "   ├󰇅 ";
+        key = "   ├󰇅 ";
         keyIcon = "";
-        keyColor = "cyan";
+        keyColor = colors.accent_secondary;
         format = "ThermalTake 600";
       }
       {
         type = "board";
         key = "   ├ ";
         keyIcon = "";
-        keyColor = "cyan";
+        keyColor = colors.accent_secondary;
         format = "{1}";
       }
       {
         type = "cpu";
         key = "   ├ ";
         keyIcon = "";
-        keyColor = "cyan";
+        keyColor = colors.accent_secondary;
         format = "{1}";
       }
       {
         type = "gpu";
         key = "   ├󰢮 ";
         keyIcon = "";
-        keyColor = "cyan";
+        keyColor = colors.accent_secondary;
         format = "{2}";
       }
       {
         type = "memory";
         key = "   ├ ";
         keyIcon = "";
-        keyColor = "cyan";
+        keyColor = colors.accent_secondary;
         format = "{1} / {2} ({3})";
       }
       {
         type = "disk";
         key = "   ├ ";
         keyIcon = "";
-        keyColor = "cyan";
+        keyColor = colors.accent_secondary;
         format = "{1} / {2} ({3}) [{9}]";
       }
       {
         type = "custom";
-        outputColor = "bright_cyan";
+        outputColor = colors.accent_secondary;
         keyIcon = "";
         format = " └────────────────────────────────────────────┘";
       }
@@ -158,29 +155,29 @@
       "break"
       {
         type = "custom";
-        outputColor = "bright_blue";
+        outputColor = colors.accent_primary;
         keyIcon = "";
         format = " ┌───────────────── Software ─────────────────┐";
       }
       {
         type = "os";
-        key = "  OS ";
+        key = "  OS ";
         keyIcon = "";
-        keyColor = "blue";
+        keyColor = colors.accent_primary;
         format = "{3}";
       }
       {
         type = "kernel";
         key = "   ├󰒓 ";
         keyIcon = "";
-        keyColor = "blue";
+        keyColor = colors.accent_primary;
         format = "{1} {2} | {4}";
       }
       {
         type = "packages";
-        key = "   ├ ";
+        key = "   ├󰏔 ";
         keyIcon = "";
-        keyColor = "blue";
+        keyColor = colors.accent_primary;
         format = "{1} Packages";
       }
       "break"
@@ -188,31 +185,31 @@
         type = "wm";
         key = " 󰧨 WM ";
         keyIcon = "";
-        keyColor = "blue";
+        keyColor = colors.accent_primary;
       }
       {
         type = "de";
         key = " 󰧨 DE ";
         keyIcon = "";
-        keyColor = "blue";
+        keyColor = colors.accent_primary;
       }
       {
         type = "terminal";
         key = "   ├ ";
         format = "{1}: {6}";
         keyIcon = "";
-        keyColor = "blue";
+        keyColor = colors.accent_primary;
       }
       {
         type = "shell";
-        key = "   ├ ";
+        key = "   ├ ";
         format = "{1}: {4}";
         keyIcon = "";
-        keyColor = "blue";
+        keyColor = colors.accent_primary;
       }
       {
         type = "custom";
-        outputColor = "bright_blue";
+        outputColor = colors.accent_primary;
         keyIcon = "";
         format = " └────────────────────────────────────────────┘";
       }
@@ -220,7 +217,7 @@
       "break"
       {
         type = "custom";
-        outputColor = "bright_green";
+        outputColor = colors.accent_tertiary;
         keyIcon = "";
         format = " ┌─────────────────── MISC ───────────────────┐";
       }
@@ -228,32 +225,34 @@
         type = "custom";
         key = " TIME ";
         keyIcon = "";
-        keyColor = "green";
+        keyColor = colors.accent_tertiary;
       }
       {
         type = "uptime";
         keyIcon = "";
         key = "   ├󰔛 ";
-        keyColor = "green";
+        keyColor = colors.accent_tertiary;
         format = "{1} Day(s), {2} Hours, {3} Minutes";
       }
       {
         type = "command";
         key = "   ├󱦟 ";
         keyIcon = "";
-        keyColor = "green";
-        text = "birth_install=$(stat -c %W /); current=$(date +%s); days_difference=$(( (current - birth_install) / 86400 )); echo $days_difference days";
+        keyColor = colors.accent_tertiary;
+        text =
+          "birth_install=$(stat -c %W /); current=$(date +%s); days_difference=$(( (current - birth_install) / 86400 )); echo $days_difference days";
       }
       {
         type = "command";
         key = "   ├ ";
         keyIcon = "";
-        keyColor = "green";
-        text = "birth_install=$(stat -c %W /); echo $(date -d @$birth_install '+%d %b %Y')";
+        keyColor = colors.accent_tertiary;
+        text =
+          "birth_install=$(stat -c %W /); echo $(date -d @$birth_install '+%d %b %Y')";
       }
       {
         type = "custom";
-        outputColor = "bright_green";
+        outputColor = colors.accent_tertiary;
         keyIcon = "";
         format = " └────────────────────────────────────────────┘";
       }
@@ -291,9 +290,9 @@
 
          ██╗████████╗███████╗██╗  ██╗██╗  ██╗
          ██║╚══██╔══╝██╔════╝██║ ██╔╝██║ ██╔╝
-         ██║   ██║   █████╗  █████╔╝ █████╔╝ 
-    ██   ██║   ██║   ██╔══╝  ██╔═██╗ ██╔═██╗ 
+         ██║   ██║   █████╗  █████╔╝ █████╔╝
+    ██   ██║   ██║   ██╔══╝  ██╔═██╗ ██╔═██╗
     ╚█████╔╝   ██║   ███████╗██║  ██╗██║  ██╗
      ╚════╝    ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝
-    '';
+  '';
 }

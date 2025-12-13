@@ -1,5 +1,11 @@
 { config, pkgs, lib, inputs, ... }:
 
+let
+  colors = config.theme.colors;
+
+  # Helper to strip # from hex colors for vim
+  stripHash = color: lib.removePrefix "#" color;
+in
 {
   imports = [
     inputs.nixvim.homeModules.nixvim
@@ -11,10 +17,27 @@
     viAlias = true;
     vimAlias = true;
 
-    # Color scheme
-    colorschemes.catppuccin = {
+    # Dynamic colorscheme using theme colors
+    colorschemes.base16 = {
       enable = true;
-      settings.flavour = "mocha";
+      colorscheme = {
+        base00 = stripHash colors.bg_primary;      # Default Background
+        base01 = stripHash colors.bg_secondary;    # Lighter Background
+        base02 = stripHash colors.bg_tertiary;     # Selection Background
+        base03 = stripHash colors.fg_dim;          # Comments, Invisibles
+        base04 = stripHash colors.fg_secondary;    # Dark Foreground
+        base05 = stripHash colors.fg_primary;      # Default Foreground
+        base06 = stripHash colors.fg_primary;      # Light Foreground
+        base07 = stripHash colors.color15;         # Light Background
+        base08 = stripHash colors.color1;          # Variables, XML Tags
+        base09 = stripHash colors.accent_tertiary; # Integers, Booleans
+        base0A = stripHash colors.color3;          # Classes, Search Highlight
+        base0B = stripHash colors.color2;          # Strings
+        base0C = stripHash colors.accent_secondary;# Regex, Escape Chars
+        base0D = stripHash colors.accent_primary;  # Functions, Methods
+        base0E = stripHash colors.color5;          # Keywords, Storage
+        base0F = stripHash colors.color1;          # Deprecated
+      };
     };
 
     # Global options
@@ -172,7 +195,7 @@
       lualine = {
         enable = true;
         settings.options = {
-          theme = "catppuccin";
+          theme = "base16";
           globalstatus = true;
         };
       };
@@ -384,7 +407,7 @@
       # Notifications
       notify = {
         enable = true;
-        settings.background_colour = "#000000";
+        settings.background_colour = colors.bg_primary;
       };
 
       # Dashboard
