@@ -6,7 +6,6 @@
     ./launch-steam.nix
     ./list-my-themes.nix
     ./open-terminal.nix
-    ./rotate-bluefin-wallpaper.nix
     ./screenshot-area.nix
     ./setup-fido2-ssh.nix
     ./ssh-bitwarden.nix

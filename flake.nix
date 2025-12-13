@@ -18,7 +18,7 @@
     };
 
     mangowc = {
-      url = "github:DreamMaoMao/mangowc";
+      url = "github:DreamMaoMao/mangowc/0.10.7";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
