@@ -34,9 +34,6 @@ in {
     ${pkgs.wl-clipboard}/bin/wl-paste --type text --watch cliphist store >/dev/null 2>&1 &
     ${pkgs.wl-clipboard}/bin/wl-paste --type image --watch cliphist store >/dev/null 2>&1 &
 
-    # Network manager applet
-    # ${pkgs.networkmanagerapplet}/bin/nm-applet >/dev/null 2>&1 &
-
     # Authentication agent
     ${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1 >/dev/null 2>&1 &
 

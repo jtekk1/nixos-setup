@@ -4,9 +4,9 @@
 
 {
   # Core color palette - Backgrounds & Panels
-  bg_primary = "#1B2229"; # Deep shadow
-  bg_secondary = "#2D363E"; # Forest blue-grey
-  bg_tertiary = "#4D5A66"; # Dark slate
+  bg_primary = "#FFEDC2"; # Bright White
+  bg_secondary = "#1B2229"; # Deep Shadow
+  bg_tertiary = "#2D363E"; # Forest blue-grey
 
   # Text & UI
   fg_primary = "#F0F3F5"; # White fur highlight
@@ -14,9 +14,9 @@
   fg_dim = "#7E8A96"; # Mid-tone cool grey
 
   # Accent colors
-  accent_primary = "#F55D16"; # Vivid orange
-  accent_secondary = "#FF9136"; # Deep orange
-  accent_tertiary = "#FFC875"; # Light flame
+  accent_primary = "#C93209"; # Red Ember
+  accent_secondary = "#F55D16"; # Vivid orange
+  accent_tertiary = "#FF9136"; # Deep orange
 
   # Special purpose colors
   cursor = "#FFEDC2"; # Brightest glow
