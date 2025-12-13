@@ -4,16 +4,10 @@ let
   hyprlock = "${pkgs.hyprlock}/bin/hyprlock";
   loginctl = "${pkgs.systemd}/bin/loginctl";
   brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
-  wlopm = "${pkgs.wlopm}/bin/wlopm";
 
-  # Use hyprctl for Hyprland, wlopm for others
-  dpmsOn = if config.wayland.windowManager.hyprland.enable or false
-           then "${pkgs.hyprland}/bin/hyprctl dispatch dpms on"
-           else "${wlopm} --on '*'";
-
-  dpmsOff = if config.wayland.windowManager.hyprland.enable or false
-            then "${pkgs.hyprland}/bin/hyprctl dispatch dpms off"
-            else "${wlopm} --off '*'";
+  # Use the dpms-on/dpms-off scripts from dpms-control.nix (runtime compositor detection)
+  dpmsOn = "dpms-on";
+  dpmsOff = "dpms-off";
 
   # Lock screen and Bitwarden together
   lockScreen = pkgs.writeShellScript "lock-screen" ''
