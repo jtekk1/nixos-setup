@@ -7,6 +7,9 @@
     ./mango
   ];
 
+  # Enable swww wallpaper management for mango
+  programs.wallpaper.enable = true;
+
   # Additional Mango-specific packages
   home.packages = with pkgs; [
     sway-audio-idle-inhibit

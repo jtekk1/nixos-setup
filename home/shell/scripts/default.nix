@@ -10,7 +10,7 @@
     ./screenshot-area.nix
     ./setup-fido2-ssh.nix
     ./ssh-bitwarden.nix
-    ./unified-wallpaper.nix
+    # unified-wallpaper is now defined in home/desktop/common/wl-utils/wallpaper.nix
     ./update-cursor.nix
   ];
 }

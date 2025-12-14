@@ -4,7 +4,7 @@
   wayland.windowManager.mango.settings = ''
     # Window management
     bind=SUPER,q,killclient,
-    # bind=SUPER+SHIFT,q,forcekill  # Function doesn't exist in mangowc yet
+    bind=SUPER+SHIFT,q,forcekill
 
     # Focus navigation
     bind=SUPER,Left,focusdir,left

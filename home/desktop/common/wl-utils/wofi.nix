@@ -154,11 +154,23 @@
               ;;
           "󰍃 Logout")
               # Handle logout based on compositor
-              if [ "$XDG_CURRENT_DESKTOP" = "Hyprland" ]; then
-                  hyprctl dispatch exit
-              else
-                  loginctl terminate-user $USER
-              fi
+              case "$XDG_CURRENT_DESKTOP" in
+                  Hyprland)
+                      hyprctl dispatch exit
+                      ;;
+                  mango)
+                      # Gracefully stop mango to release GPU/DRM resources
+                      systemctl --user stop graphical-session.target 2>/dev/null
+                      pkill -SIGTERM mango
+                      ;;
+                  COSMIC)
+                      # COSMIC handles its own session management
+                      cosmic-session exit 2>/dev/null || loginctl terminate-user $USER
+                      ;;
+                  *)
+                      loginctl terminate-user $USER
+                      ;;
+              esac
               ;;
           "󰒲 Suspend")
               systemctl suspend

@@ -5,6 +5,7 @@
     # Environment variables
     env=XCURSOR_SIZE,24
     env=XCURSOR_THEME,Yaru
+    env=GTK_THEME,Yaru-dark
     env=GTK_IM_MODULE,wayland
     env=GLFW_IM_MODULE,ibus
     env=QT_QPA_PLATFORMTHEME,qt5ct

@@ -5,7 +5,6 @@
   imports = [
     ./unfree.nix
     ./apps.nix
-    # ./bluefin-wallpapers.nix  # TODO: Fix hash
     ./appimages
     ./gaming
     ./packages
