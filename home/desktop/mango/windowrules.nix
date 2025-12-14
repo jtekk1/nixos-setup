@@ -9,7 +9,10 @@
     windowrule=isfloating:1,appid:xfce-polkit
     windowrule=isfloating:1,appid:steam,isoverlay:1,tag:6
     windowrule=animation_type_close:zoom,appid:Rofi
+    windowrule=animation_type_open:zoom,appid:Rofi
     windowrule=unfocused_opacity:0.85,focused_opacity:0.95,appid:kitty
+    windowrule=unfocused_opacity:0.85,focused_opacity:0.95,appid:foot
+    windowrule=unfocused_opacity:0.85,focused_opacity:0.95,appid:ghostty
     windowrule=unfocused_opacity:1.0,focused_opacity:1.0,appid:Google-chrome
   '';
 }
