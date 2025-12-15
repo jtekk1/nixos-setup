@@ -74,8 +74,6 @@
           jq
           nix
           nodejs
-          podman
-          skopeo
           tea
           wget
         ];
