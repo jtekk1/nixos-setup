@@ -37,7 +37,7 @@ in {
     ];
 
   mini-me = roles.dns ++ roles.ha-router ++ roles.monitoring
-    ++ [ ./services/mailrise.ni ./services/restic-mini-me.nix ];
+    ++ [ ./services/mailrise.nix ./services/restic-mini-me.nix ];
 
   tank = roles.reverse-proxy ++ roles.postgres-metrics ++ roles.redis-metrics
     ++ roles.backup-server ++ roles.zfs-replication ++ roles.monitoring

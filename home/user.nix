@@ -2,6 +2,6 @@
 
 {
   home.username = "jtekk";
-  home.homeDirectory = "/home/jtekk";
+  home.homeDirectory = lib.mkForce "/home/jtekk";
   home.stateVersion = "25.11";
 }
