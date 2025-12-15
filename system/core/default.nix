@@ -10,4 +10,5 @@
     ./tailscale.nix
     ./users.nix
   ];
+  # Note: audio-n-wifi.nix is imported separately by desktop configurations
 }

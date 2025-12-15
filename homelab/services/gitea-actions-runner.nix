@@ -4,6 +4,27 @@
   # Gitea Actions Runner - CI/CD worker for Gitea
   # Uses Podman for job isolation
 
+  # Configure container registries - default to docker.io and disable interactive prompts
+  virtualisation.containers.registries.search = [ "docker.io" "ghcr.io" ];
+  virtualisation.containers.containersConf.settings.engine.short_name_mode = "disabled";
+
+  # Enable podman with rootless support for CI builds
+  virtualisation.podman = {
+    enable = true;
+    dockerCompat = true;  # Provides docker alias
+  };
+
+  # Create static gitea-runner user with subuid/subgid for rootless podman
+  users.users.gitea-runner = {
+    isSystemUser = true;
+    group = "gitea-runner";
+    home = "/var/lib/gitea-runner";
+    createHome = true;
+    subUidRanges = [{ startUid = 200000; count = 65536; }];
+    subGidRanges = [{ startGid = 200000; count = 65536; }];
+  };
+  users.groups.gitea-runner = {};
+
   # Sops secret for runner registration token
   # Mode 0444 allows the gitea-runner dynamic user to read the token
   # The token is only used once for registration, then a different auth is used

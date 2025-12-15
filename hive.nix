@@ -20,7 +20,7 @@ let
   mkColmenaServer = { hostname, theme }: {
     deployment = {
       targetHost = networkConfig.hosts.${hostname}.ip;
-      targetUser = "deploy";
+      targetUser = "jtekk";
       targetPort = 22;
     };
 

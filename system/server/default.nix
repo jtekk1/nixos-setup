@@ -8,5 +8,6 @@
     ./nas-shares.nix
     ./virtualization.nix
     ./secrets.nix
+    ../core
   ];
 }
