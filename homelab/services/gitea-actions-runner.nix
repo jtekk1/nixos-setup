@@ -8,22 +8,11 @@
   virtualisation.containers.registries.search = [ "docker.io" "ghcr.io" ];
   virtualisation.containers.containersConf.settings.engine.short_name_mode = "disabled";
 
-  # Enable podman with rootless support for CI builds
+  # Enable podman for CI builds (rootful via sudo)
   virtualisation.podman = {
     enable = true;
     dockerCompat = true;  # Provides docker alias
   };
-
-  # Create static gitea-runner user with subuid/subgid for rootless podman
-  users.users.gitea-runner = {
-    isSystemUser = true;
-    group = "gitea-runner";
-    home = "/var/lib/gitea-runner";
-    createHome = true;
-    subUidRanges = [{ startUid = 200000; count = 65536; }];
-    subGidRanges = [{ startGid = 200000; count = 65536; }];
-  };
-  users.groups.gitea-runner = {};
 
   # Sops secret for runner registration token
   # Mode 0444 allows the gitea-runner dynamic user to read the token
