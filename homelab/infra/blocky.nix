@@ -127,6 +127,9 @@ in
           # Tekkverse environments (internal only)
           "dev.tekkverse.com" = "192.168.0.251";
           "stage.tekkverse.com" = "192.168.0.251";
+          "tekkverse.com" = "192.168.0.251";
+          "www.tekkverse.com" = "192.168.0.251";
+          "preview.tekkverse.com" = "192.168.0.251";
           # Server hostnames
           "beelink.jtekk.dev" = "192.168.0.251";
           "mini-me.jtekk.dev" = "192.168.0.250";
