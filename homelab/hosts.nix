@@ -34,6 +34,8 @@ in {
       ./services/home-assistant.nix
       ./services/blog.nix
       ./services/restic.nix
+      ./sites/deploy-controller.nix
+      ./sites/tekkverse.nix
     ];
 
   mini-me = roles.dns ++ roles.ha-router ++ roles.monitoring

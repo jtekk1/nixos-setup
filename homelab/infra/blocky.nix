@@ -122,6 +122,11 @@ in
           "cp-beelink.jtekk.dev" = "192.168.0.251";
           "cp-tank.jtekk.dev" = "192.168.0.251";
           "cp-deli.jtekk.dev" = "192.168.0.251";
+          # Deploy controller (internal only)
+          "deploy.jtekk.dev" = "192.168.0.251";
+          # Tekkverse environments (internal only)
+          "dev.tekkverse.com" = "192.168.0.251";
+          "stage.tekkverse.com" = "192.168.0.251";
           # Server hostnames
           "beelink.jtekk.dev" = "192.168.0.251";
           "mini-me.jtekk.dev" = "192.168.0.250";
