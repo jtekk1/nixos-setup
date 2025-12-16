@@ -88,6 +88,7 @@ in
     locations."/" = {
       proxyPass = "http://192.168.0.250:9090";
       proxyWebsockets = true;
+      extraConfig = "proxy_set_header X-Forwarded-Proto $scheme;";
     };
   };
 
@@ -97,6 +98,7 @@ in
     locations."/" = {
       proxyPass = "http://192.168.0.251:9090";
       proxyWebsockets = true;
+      extraConfig = "proxy_set_header X-Forwarded-Proto $scheme;";
     };
   };
 
@@ -106,6 +108,7 @@ in
     locations."/" = {
       proxyPass = "http://192.168.0.252:9090";
       proxyWebsockets = true;
+      extraConfig = "proxy_set_header X-Forwarded-Proto $scheme;";
     };
   };
 
@@ -115,6 +118,7 @@ in
     locations."/" = {
       proxyPass = "http://192.168.0.253:9090";
       proxyWebsockets = true;
+      extraConfig = "proxy_set_header X-Forwarded-Proto $scheme;";
     };
   };
 }
