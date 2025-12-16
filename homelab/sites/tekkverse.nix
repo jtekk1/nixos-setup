@@ -11,14 +11,7 @@
 
     locations."/" = {
       proxyPass = "http://127.0.0.1:8200";
-      extraConfig = ''
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-      '';
     };
-
   };
 
   # Preview environment for tekkverse (public)
@@ -27,45 +20,27 @@
     forceSSL = true;
 
     locations."/" = {
-      proxyPass = "http://127.0.0.1:8201";  # Preview port
-      extraConfig = ''
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-      '';
+      proxyPass = "http://127.0.0.1:8201";
     };
   };
 
   # Stage environment (internal only - no ACME, self-signed)
   services.nginx.virtualHosts."stage.tekkverse.com" = {
     forceSSL = true;
-    useACMEHost = "jtekk.dev";  # Use wildcard cert for internal
+    useACMEHost = "jtekk.dev";
 
     locations."/" = {
-      proxyPass = "http://127.0.0.1:8203";  # Stage port
-      extraConfig = ''
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-      '';
+      proxyPass = "http://127.0.0.1:8203";
     };
   };
 
   # Dev environment (internal only - no ACME, self-signed)
   services.nginx.virtualHosts."dev.tekkverse.com" = {
     forceSSL = true;
-    useACMEHost = "jtekk.dev";  # Use wildcard cert for internal
+    useACMEHost = "jtekk.dev";
 
     locations."/" = {
-      proxyPass = "http://127.0.0.1:8202";  # Dev port
-      extraConfig = ''
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-      '';
+      proxyPass = "http://127.0.0.1:8202";
     };
   };
 }
