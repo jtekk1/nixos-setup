@@ -96,7 +96,7 @@ in
     forceSSL = true;
     useACMEHost = domain;
     locations."/" = {
-      proxyPass = "http://192.168.0.251:9090";
+      proxyPass = "http://127.0.0.1:9090";
       proxyWebsockets = true;
       extraConfig = "proxy_set_header X-Forwarded-Proto $scheme;";
     };
