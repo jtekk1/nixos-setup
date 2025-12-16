@@ -112,13 +112,4 @@ in
     };
   };
 
-  services.nginx.virtualHosts."cp-deli.${domain}" = {
-    forceSSL = true;
-    useACMEHost = domain;
-    locations."/" = {
-      proxyPass = "http://192.168.0.253:9090";
-      proxyWebsockets = true;
-      extraConfig = "proxy_set_header X-Forwarded-Proto $scheme;";
-    };
-  };
 }

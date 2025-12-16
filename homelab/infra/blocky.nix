@@ -121,7 +121,6 @@ in
           "cp-mini-me.jtekk.dev" = "192.168.0.251";
           "cp-beelink.jtekk.dev" = "192.168.0.251";
           "cp-tank.jtekk.dev" = "192.168.0.251";
-          "cp-deli.jtekk.dev" = "192.168.0.251";
           # Deploy controller (internal only)
           "deploy.jtekk.dev" = "192.168.0.251";
           # Tekkverse environments (internal only)
@@ -134,7 +133,6 @@ in
           "beelink.jtekk.dev" = "192.168.0.251";
           "mini-me.jtekk.dev" = "192.168.0.250";
           "tank.jtekk.dev" = "192.168.0.252";
-          "deli.jtekk.dev" = "192.168.0.253";
         };
       };
     };

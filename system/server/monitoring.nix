@@ -12,7 +12,7 @@
       WebService = {
         # Allow direct access and nginx proxy access
         Origins = lib.mkForce
-          "https://beelink:9090 https://tank:9090 https://mini-me:9090 https://deli:9090 wss://beelink:9090 wss://tank:9090 wss://mini-me:9090 wss://deli:9090 https://cp-beelink.jtekk.dev https://cp-tank.jtekk.dev https://cp-mini-me.jtekk.dev https://cp-deli.jtekk.dev wss://cp-beelink.jtekk.dev wss://cp-tank.jtekk.dev wss://cp-mini-me.jtekk.dev wss://cp-deli.jtekk.dev";
+          "https://beelink:9090 https://tank:9090 https://mini-me:9090 wss://beelink:9090 wss://tank:9090 wss://mini-me:9090 https://cp-beelink.jtekk.dev https://cp-tank.jtekk.dev https://cp-mini-me.jtekk.dev wss://cp-beelink.jtekk.dev wss://cp-tank.jtekk.dev wss://cp-mini-me.jtekk.dev";
         ProtocolHeader = "X-Forwarded-Proto";
         ForwardedForHeader = "X-Forwarded-For";
         # Allow HTTP connections from nginx reverse proxy
