@@ -39,6 +39,8 @@
           "fedora-latest:docker://fedora:43"
           "fedora-42:docker://fedora:42"
           "debian-latest:docker://debian:latest"
+          "void-latest:docker://ghcr.io/void-linux/void-glibc-full:latest"
+          "void-musl:docker://ghcr.io/void-linux/void-musl-full:latest"
           "linux:docker://ghcr.io/catthehacker/ubuntu:act-latest"
           "nix:host"
         ];
@@ -106,6 +108,8 @@
       ${pkgs.podman}/bin/podman pull fedora:43 || true
       ${pkgs.podman}/bin/podman pull fedora:42 || true
       ${pkgs.podman}/bin/podman pull debian:latest || true
+      ${pkgs.podman}/bin/podman pull ghcr.io/void-linux/void-glibc-full:latest || true
+      ${pkgs.podman}/bin/podman pull ghcr.io/void-linux/void-musl-full:latest || true
       echo "Done pre-pulling images"
     '';
   };
