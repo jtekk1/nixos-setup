@@ -38,6 +38,7 @@
           "ubuntu-22.04:docker://ghcr.io/catthehacker/ubuntu:act-22.04"
           "fedora-latest:docker://fedora:43"
           "fedora-42:docker://fedora:42"
+          "debian-latest:docker://debian:latest"
           "linux:docker://ghcr.io/catthehacker/ubuntu:act-latest"
           "nix:host"
         ];
@@ -104,6 +105,7 @@
       ${pkgs.podman}/bin/podman pull ghcr.io/catthehacker/ubuntu:act-22.04 || true
       ${pkgs.podman}/bin/podman pull fedora:43 || true
       ${pkgs.podman}/bin/podman pull fedora:42 || true
+      ${pkgs.podman}/bin/podman pull debian:latest || true
       echo "Done pre-pulling images"
     '';
   };
