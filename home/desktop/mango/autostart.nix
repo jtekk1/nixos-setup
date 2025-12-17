@@ -40,8 +40,8 @@ in {
     # OSD service for volume and brightness
     ${pkgs.swayosd}/bin/swayosd-server >/dev/null 2>&1 &
 
-    # Disable projector on startup (can be enabled via waybar/cutacha)
-    ${pkgs.wlr-randr}/bin/wlr-randr --output HDMI-A-2 --off >/dev/null 2>&1
+    # Disable projector on startup (can be enabled via keybind or cutacha)
+    mmsg -d "disable_monitor,HDMI-A-2" >/dev/null 2>&1
 
     # Start user graphical session target
     systemctl --user start graphical-session.target >/dev/null 2>&1

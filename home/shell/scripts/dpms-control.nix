@@ -8,7 +8,13 @@
         Hyprland)
           ${hyprland}/bin/hyprctl dispatch dpms off
           ;;
-        mango|*)
+        mango)
+          # Use native mmsg IPC for mango
+          for output in $(${wlr-randr}/bin/wlr-randr --json | ${jq}/bin/jq -r '.[] | select(.enabled) | .name'); do
+            mmsg -d "disable_monitor,$output"
+          done
+          ;;
+        *)
           ${wlopm}/bin/wlopm --off '*'
           ;;
       esac
@@ -20,7 +26,13 @@
         Hyprland)
           ${hyprland}/bin/hyprctl dispatch dpms on
           ;;
-        mango|*)
+        mango)
+          # Use native mmsg IPC for mango
+          for output in $(${wlr-randr}/bin/wlr-randr --json | ${jq}/bin/jq -r '.[].name'); do
+            mmsg -d "enable_monitor,$output"
+          done
+          ;;
+        *)
           ${wlopm}/bin/wlopm --on '*'
           ;;
       esac
