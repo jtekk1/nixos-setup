@@ -9,10 +9,10 @@ let
   unified-wallpaper = pkgs.writeShellScriptBin "unified-wallpaper" ''
     #!/usr/bin/env bash
 
-    # Ensure PATH includes coreutils and other required tools
-    export PATH="${pkgs.coreutils}/bin:${pkgs.findutils}/bin:${pkgs.procps}/bin:$PATH"
+    # Ensure PATH includes required tools
+    export PATH="${pkgs.coreutils}/bin:${pkgs.findutils}/bin:${pkgs.procps}/bin:${pkgs.gnugrep}/bin:$PATH"
 
-    # Unified wallpaper changer for hyprland, mango, and cosmic
+    # Unified wallpaper changer using swaybg
     # Supports multiple modes: next/previous, random, time-based, specific
 
     # Configuration
@@ -25,11 +25,6 @@ let
     WALLPAPER_DIRS=(
       "$HOME/Pictures/nix"
     )
-
-    # Transition settings for swww
-    TRANSITION_TYPE="fade"
-    TRANSITION_DURATION="3"
-    TRANSITION_FPS="60"
 
     # Create config directory if it doesn't exist
     mkdir -p "$CONFIG_DIR"
@@ -48,26 +43,6 @@ let
       echo "  -c, --current Show current wallpaper"
       echo "  -h, --help    Show this help message"
       exit 0
-    }
-
-    # Function to detect running compositor
-    detect_compositor() {
-      if [ -n "$HYPRLAND_INSTANCE_SIGNATURE" ]; then
-        echo "hyprland"
-      elif pgrep -x mango > /dev/null; then
-        echo "mango"
-      else
-        echo "unknown"
-      fi
-    }
-
-    # Function to ensure swww daemon is running
-    ensure_swww_daemon() {
-      # Check if swww can query (daemon is running and responsive)
-      if ! ${pkgs.swww}/bin/swww query &>/dev/null; then
-        ${pkgs.swww}/bin/swww-daemon &
-        sleep 0.5
-      fi
     }
 
     # Function to get all wallpapers
@@ -121,31 +96,10 @@ let
         exit 1
       fi
 
-      ensure_swww_daemon
-
-      # Get current wallpaper before change
-      local before=$(${pkgs.swww}/bin/swww query 2>/dev/null | grep -o 'image: .*' | cut -d' ' -f2)
-
-      # Set wallpaper with swww
-      ${pkgs.swww}/bin/swww img "$wallpaper" \
-        --transition-type "$TRANSITION_TYPE" \
-        --transition-duration "$TRANSITION_DURATION" \
-        --transition-fps "$TRANSITION_FPS"
-
-      # Verify the change happened, restart daemon if stuck
-      sleep 0.5
-      local after=$(${pkgs.swww}/bin/swww query 2>/dev/null | grep -o 'image: .*' | cut -d' ' -f2)
-      if [ "$before" = "$after" ] && [ "$wallpaper" != "$after" ]; then
-        echo "Daemon stuck, restarting..."
-        pkill swww-daemon 2>/dev/null
-        sleep 0.5
-        ${pkgs.swww}/bin/swww-daemon &
-        sleep 0.5
-        ${pkgs.swww}/bin/swww img "$wallpaper" \
-          --transition-type "$TRANSITION_TYPE" \
-          --transition-duration "$TRANSITION_DURATION" \
-          --transition-fps "$TRANSITION_FPS"
-      fi
+      # Kill existing swaybg and start new one
+      pkill -x swaybg 2>/dev/null
+      ${pkgs.swaybg}/bin/swaybg -i "$wallpaper" -m fill &
+      disown
 
       echo "Wallpaper changed to: $(basename "$wallpaper")"
     }
@@ -335,7 +289,7 @@ let
 in
 {
   options.programs.wallpaper = {
-    enable = mkEnableOption "wallpaper management with swww";
+    enable = mkEnableOption "wallpaper management with swaybg";
 
     autoRotate = {
       enable = mkOption {
@@ -370,27 +324,24 @@ in
   };
 
   config = mkIf cfg.enable {
-    # Install swww package and unified-wallpaper script
+    # Install swaybg package and unified-wallpaper script
     home.packages = [
-      pkgs.swww
+      pkgs.swaybg
       unified-wallpaper
     ];
 
-    # Systemd service for swww daemon
-    systemd.user.services.swww-daemon = {
+    # Systemd service to restore wallpaper on startup
+    systemd.user.services.wallpaper-restore = {
       Unit = {
-        Description = "Swww wallpaper daemon";
+        Description = "Restore current wallpaper on startup";
         After = [ "graphical-session-pre.target" ];
         PartOf = [ "graphical-session.target" ];
       };
 
       Service = {
-        Type = "simple";
-        # Kill any existing swww-daemon and clean stale socket before starting
-        ExecStartPre = "${pkgs.bash}/bin/bash -c '${pkgs.procps}/bin/pkill -x swww-daemon 2>/dev/null || true; ${pkgs.coreutils}/bin/sleep 0.3; rm -f \"$XDG_RUNTIME_DIR/swww-\"*.socket 2>/dev/null || true'";
-        ExecStart = "${pkgs.swww}/bin/swww-daemon";
-        Restart = "on-failure";
-        RestartSec = "5s";
+        Type = "oneshot";
+        RemainAfterExit = true;
+        ExecStart = "${pkgs.bash}/bin/bash -c 'if [ -f $HOME/.config/wallpaper/current ]; then ${unified-wallpaper}/bin/unified-wallpaper --set \"$(${pkgs.coreutils}/bin/cat $HOME/.config/wallpaper/current)\"; else ${unified-wallpaper}/bin/unified-wallpaper; fi'";
       };
 
       Install = {
@@ -398,32 +349,11 @@ in
       };
     };
 
-    # Systemd service to restore wallpaper on startup
-    systemd.user.services.wallpaper-restore = {
-      Unit = {
-        Description = "Restore current wallpaper on startup";
-        After = [ "swww-daemon.service" ];
-        Requires = [ "swww-daemon.service" ];
-      };
-
-      Service = {
-        Type = "oneshot";
-        # Add delay to ensure swww-daemon is fully ready
-        ExecStartPre = "${pkgs.coreutils}/bin/sleep 1";
-        ExecStart = "${pkgs.bash}/bin/bash -c 'if [ -f $HOME/.config/wallpaper/current ]; then ${unified-wallpaper}/bin/unified-wallpaper --set \"$(${pkgs.coreutils}/bin/cat $HOME/.config/wallpaper/current)\"; else ${unified-wallpaper}/bin/unified-wallpaper; fi'";
-      };
-
-      Install = {
-        WantedBy = [ "swww-daemon.service" ];
-      };
-    };
-
     # Systemd service for wallpaper rotation
     systemd.user.services.wallpaper-rotate = mkIf cfg.autoRotate.enable {
       Unit = {
         Description = "Rotate wallpaper";
-        After = [ "swww-daemon.service" "wallpaper-restore.service" ];
-        Requires = [ "swww-daemon.service" ];
+        After = [ "wallpaper-restore.service" ];
       };
 
       Service = {
