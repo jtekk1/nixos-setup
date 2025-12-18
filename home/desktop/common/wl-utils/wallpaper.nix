@@ -9,6 +9,9 @@ let
   unified-wallpaper = pkgs.writeShellScriptBin "unified-wallpaper" ''
     #!/usr/bin/env bash
 
+    # Ensure PATH includes coreutils and other required tools
+    export PATH="${pkgs.coreutils}/bin:${pkgs.findutils}/bin:${pkgs.procps}/bin:$PATH"
+
     # Unified wallpaper changer for hyprland, mango, and cosmic
     # Supports multiple modes: next/previous, random, time-based, specific
 

@@ -1,7 +1,7 @@
 { pkgs, lib, config, ... }:
 
 let
-  hyprlock = "${pkgs.hyprlock}/bin/hyprlock";
+  hyprlock = "hyprlock-safe";  # Uses wrapper with --immediate-render
   loginctl = "${pkgs.systemd}/bin/loginctl";
   brightnessctl = "${pkgs.brightnessctl}/bin/brightnessctl";
 

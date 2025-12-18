@@ -1,7 +1,9 @@
-{ pkgs, lib, osConfig, ... }:
+{ pkgs, lib, osConfig ? null, isDesktop ? true, ... }:
 
 let
-  isDesktop = osConfig.jtekk.desktop-env != "server";
+  isDesktopEnv = if osConfig != null
+    then osConfig.jtekk.desktop-env != "server"
+    else isDesktop;
 in
 {
   imports =
@@ -10,7 +12,7 @@ in
       ./ssh.nix
       ./tools
     ]
-    ++ lib.optionals isDesktop [
+    ++ lib.optionals isDesktopEnv [
       ./scripts
     ];
 }

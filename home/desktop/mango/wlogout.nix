@@ -10,7 +10,7 @@ in {
   home.file.".config/mango/wlogout/layout".text = ''
     {
         "label" : "lock",
-        "action" : "hyprlock",
+        "action" : "hyprlock-safe",
         "text" : "  Lock   ",
         "keybind" : "l"
     }

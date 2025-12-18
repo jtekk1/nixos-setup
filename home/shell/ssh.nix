@@ -1,4 +1,4 @@
-{ pkgs, osConfig, ... }:
+{ pkgs, ... }:
 
 let
   networkConfig = import ../../network-config.nix;

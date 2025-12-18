@@ -1,7 +1,10 @@
-{ pkgs, lib, osConfig, inputs, theme ? "neuro-fusion", ... }:
+{ pkgs, lib, osConfig ? null, inputs, theme ? "neuro-fusion", isDesktop ? true, ... }:
 
 let
-  isDesktop = osConfig.jtekk.desktop-env != "server";
+  # Use osConfig if available (NixOS module), otherwise use passed isDesktop arg (standalone)
+  isDesktopEnv = if osConfig != null
+    then osConfig.jtekk.desktop-env != "server"
+    else isDesktop;
 in
 {
   imports =
@@ -10,7 +13,7 @@ in
       ./shell
       ./theme.nix
     ]
-    ++ lib.optionals isDesktop [
+    ++ lib.optionals isDesktopEnv [
       ./apps
       ./desktop/cosmic.nix
       ./desktop/hyprland.nix

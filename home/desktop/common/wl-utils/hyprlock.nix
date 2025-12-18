@@ -10,7 +10,15 @@ let
   placeholder_color = colors.rgba.fg_secondary 0.6;
   check_color = colors.rgba.accent_secondary 1.0;
 
+  # Wrapper script that always uses --immediate-render (fixes gray screen on mango)
+  hyprlock-safe = pkgs.writeShellScriptBin "hyprlock-safe" ''
+    exec ${pkgs.hyprlock}/bin/hyprlock --immediate-render "$@"
+  '';
+
 in {
+  # Add wrapper to PATH
+  home.packages = [ hyprlock-safe ];
+
   # Copy backgrounds to Pictures directory
   home.file = {
     "Pictures/backgrounds/1.png".source = ../../../assets/backgrounds/1.png;
@@ -28,7 +36,7 @@ in {
 
       general = {
         hide_cursor = true;
-        disable_loading_bar = true;
+        screencopy_mode = 1;  # Use CPU buffer instead of DMA (may help with mango)
       };
 
       background = {
@@ -40,16 +48,15 @@ in {
         vibrancy_darkness = 0.3;
       };
 
+      # Animations (0.9+ syntax)
       animations = {
         enabled = true;
-        fade_in = {
-          duration = 300;
-          bezier = "easeOutQuint";
-        };
-        fade_out = {
-          duration = 300;
-          bezier = "easeOutQuint";
-        };
+        bezier = "easeOutQuint, 0.22, 1, 0.36, 1";
+        animation = [
+          "fadeIn, 1, 3, easeOutQuint"
+          "fadeOut, 1, 3, easeOutQuint"
+          "inputFieldDots, 1, 2, easeOutQuint"
+        ];
       };
 
       label = {
@@ -82,8 +89,6 @@ in {
           outline_thickness = 2;
 
           placeholder_text = "  Enter Password 󰈷 ";
-          placeholder_color = font_color;
-          placeholder_text_color = font_color;
           check_color = check_color;
           fail_text = ''<i>$PAMFAIL ($ATTEMPTS)</i>'';
 

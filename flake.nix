@@ -125,7 +125,26 @@
           ];
         };
 
+      # Standalone home-manager configuration
+      mkHome = { theme ? "nightfox", isDesktop ? true }:
+        home-manager.lib.homeManagerConfiguration {
+          pkgs = import nixpkgs {
+            system = system_arch;
+            overlays = [ (import ./overlays/custom-fixes.nix inputs) ];
+            config.allowUnfree = true;
+          };
+          extraSpecialArgs = { inherit inputs theme isDesktop; osConfig = null; };
+          modules = [ ./home ];
+        };
+
     in {
+
+      # Standalone home-manager configurations
+      homeConfigurations = {
+        "jtekk" = mkHome { };
+      } // lib.genAttrs (map (t: "jtekk-${t}") themes) (name:
+        let theme = lib.removePrefix "jtekk-" name;
+        in mkHome { inherit theme; });
 
       nixosConfigurations = {
         # Desktop configuration (default theme)

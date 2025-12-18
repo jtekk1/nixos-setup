@@ -7,6 +7,9 @@
     withUWSM = true;
   };
 
+  # PAM configuration for hyprlock screen locker
+  security.pam.services.hyprlock = {};
+
   # Hyprland ecosystem packages
   environment.systemPackages = with pkgs; [
     hypridle
