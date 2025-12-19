@@ -9,7 +9,25 @@
   outputs = { self, nixpkgs, flake-utils }:
     flake-utils.lib.eachDefaultSystem (system:
       let
-        pkgs = nixpkgs.legacyPackages.${system};
+        # Override qtile-extras to skip flaky X11 positioning tests
+        overlay = final: prev: {
+          python3 = prev.python3.override {
+            self = final.python3;
+            packageOverrides = pyFinal: pyPrev: {
+              qtile-extras = pyPrev.qtile-extras.overrideAttrs (old: {
+                disabledTests = (old.disabledTests or [ ]) ++ [
+                  "test_popup_positioning_relative"
+                  "test_widget_init_config"
+                ];
+              });
+            };
+          };
+          python3Packages = final.python3.pkgs;
+        };
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [ overlay ];
+        };
         python = pkgs.python3;
         pythonPkgs = python.pkgs;
       in

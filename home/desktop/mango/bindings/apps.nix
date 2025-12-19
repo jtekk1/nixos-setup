@@ -10,7 +10,7 @@ in {
     bind=SUPER,slash,spawn,bitwarden
     bind=SUPER,b,spawn,foot btop
     bind=SUPER,c,spawn,cursor
-    bind=SUPER,f,spawn,cosmic-files
+    bind=SUPER,f,spawn,nautilus
     bind=SUPER+SHIFT,f,spawn,kitty -e superfile
     bind=SUPER,m,spawn,spotify
     #bind=SUPER,n,spawn,kitty nvim

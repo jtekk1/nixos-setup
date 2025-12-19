@@ -57,6 +57,7 @@ in
     enable = true;
     settings = {
       background = {
+        path = "/home/jtekk/Pictures/nix/huntress.png";
         fit = "Cover";
       };
       GTK = {

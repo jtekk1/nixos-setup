@@ -66,9 +66,9 @@
     zathura # PDF viewer
     mpv # Media player
 
-    # COSMIC apps
-    cosmic-files
-    cosmic-store
+    # File manager and app store
+    nautilus
+    bazaar
 
     # Desktop utilities
     nwg-look # GTK theme settings
