@@ -85,7 +85,7 @@
             ({ pkgs, ... }: {
               nixpkgs.overlays =
                 [ (import ./overlays/custom-fixes.nix inputs) ];
-              jtekk.desktop-env = "mango-hypr";
+              jtekk.desktop-env = "mango";
             })
 
             # Specialisations

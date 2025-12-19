@@ -3,8 +3,6 @@
 {
   imports = [
     ./clipboard.nix
-    ./hypridle.nix
-    ./hyprlock.nix
     ./swayidle.nix
     ./swaylock.nix
     ./idle-inhibit.nix
