@@ -13,12 +13,12 @@
     };
 
     hyprland = {
-      url = "github:hyprwm/Hyprland";
+      url = "github:hyprwm/Hyprland/v0.52.2";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     mangowc = {
-      url = "github:DreamMaoMao/mangowc";
+      url = "github:DreamMaoMao/mangowc/0.10.7";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
