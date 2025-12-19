@@ -6,8 +6,8 @@
     text = ''
       #!/usr/bin/env bash
 
-      # Get the current active window's PID
-      terminal_pid=$(hyprctl activewindow -j | jq -r '.pid // 0')
+      # Get the current active window's PID using swaymsg (mango-compatible)
+      terminal_pid=$(swaymsg -t get_tree | jq -r '.. | select(.focused? == true) | .pid // 0')
 
       # If no PID or it's 0, return HOME
       if [[ "$terminal_pid" == "0" ]] || [[ -z "$terminal_pid" ]]; then

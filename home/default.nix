@@ -15,8 +15,6 @@ in
     ]
     ++ lib.optionals isDesktopEnv [
       ./apps
-      ./desktop/cosmic.nix
-      ./desktop/hyprland.nix
       ./desktop/mango.nix
     ];
 }

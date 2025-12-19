@@ -6,6 +6,5 @@
     slurp     # Region selection
     shotman   # Screenshot GUI
     swappy    # Screenshot annotation
-    hyprshot  # Hyprland screenshot wrapper
   ];
 }

@@ -10,7 +10,7 @@ in {
   home.file.".config/mango/wlogout/layout".text = ''
     {
         "label" : "lock",
-        "action" : "hyprlock-safe",
+        "action" : "swaylock",
         "text" : "  Lock   ",
         "keybind" : "l"
     }
@@ -51,7 +51,7 @@ in {
     }
   '';
 
-  # Wlogout style with neurodivergent Hyprland color scheme
+  # Wlogout style with neurodivergent color scheme
   home.file.".config/mango/wlogout/style.css".text = ''
     window {
         font-family: HYLeMiaoTiJ,CaskaydiaCove Nerd Font, monospace;

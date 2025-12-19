@@ -12,11 +12,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    hyprland = {
-      url = "github:hyprwm/Hyprland/v0.52.2";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     mangowc = {
       url = "github:DreamMaoMao/mangowc/0.10.7";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -55,7 +50,7 @@
       lib = nixpkgs.lib;
       system_arch = "x86_64-linux";
 
-      desktopEnvironments = [ "mango" "cosmic" "hyprland" ];
+      desktopEnvironments = [ "mango" ];
 
       # All available themes (imported from theme-configs.nix)
       themes = import ./theme-configs.nix;
@@ -90,10 +85,10 @@
             ({ pkgs, ... }: {
               nixpkgs.overlays =
                 [ (import ./overlays/custom-fixes.nix inputs) ];
-              jtekk.desktop-env = "desktop";
+              jtekk.desktop-env = "mango";
             })
 
-            # Specialisations for optional services
+            # Specialisations
             {
               specialisation = {
                 openrgb.configuration = {

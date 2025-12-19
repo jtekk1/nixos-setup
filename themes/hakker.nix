@@ -23,7 +23,7 @@
   selection_fg = "#000000";    # Black text on selection
   url = "#00ffcc";            # Cyan-green for URLs
 
-  # Border colors for Hyprland/Mango
+  # Border colors for Mango
   border_active_1 = "#00ff99";  # Bright green gradient start
   border_active_2 = "#00cc77";  # Medium green gradient end
   border_inactive = "#1a1a1a66"; # Dark gray with transparency

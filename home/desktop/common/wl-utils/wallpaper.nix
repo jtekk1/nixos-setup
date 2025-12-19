@@ -23,7 +23,7 @@ let
 
     # Default wallpaper directories (in priority order)
     WALLPAPER_DIRS=(
-      "$HOME/Pictures/nix"
+      "$HOME/Pictures/backgrounds"
     )
 
     # Create config directory if it doesn't exist
@@ -78,9 +78,9 @@ let
       echo "$wallpaper" > "$STATE_FILE"
       echo "$index" > "$INDEX_FILE"
 
-      # Create/update symlink for hyprlock
-      mkdir -p "$HOME/.config/hyprlock"
-      ln -sf "$wallpaper" "$HOME/.config/hyprlock/current-wallpaper"
+      # Create/update symlink for swaylock
+      mkdir -p "$HOME/.config/swaylock"
+      ln -sf "$wallpaper" "$HOME/.config/swaylock/current-wallpaper"
 
       # Add to history (keep last 100 entries)
       echo "$wallpaper" >> "$HISTORY_FILE"
@@ -286,8 +286,7 @@ let
         ;;
     esac
   '';
-in
-{
+in {
   options.programs.wallpaper = {
     enable = mkEnableOption "wallpaper management with swaybg";
 
@@ -301,7 +300,8 @@ in
       interval = mkOption {
         type = types.str;
         default = "15min";
-        description = "Systemd timer interval for wallpaper rotation (e.g., 15min, 30min, 1h)";
+        description =
+          "Systemd timer interval for wallpaper rotation (e.g., 15min, 30min, 1h)";
       };
 
       mode = mkOption {
@@ -315,9 +315,7 @@ in
       type = types.listOf types.str;
       default = [
         "/home/jtekk/NixSetups/home/assets/backgrounds"
-        "~/Pictures/bluefin-dinos"
         "~/Pictures/backgrounds"
-        "~/Pictures/wallpapers"
       ];
       description = "Directories to search for wallpapers";
     };
@@ -325,10 +323,7 @@ in
 
   config = mkIf cfg.enable {
     # Install swaybg package and unified-wallpaper script
-    home.packages = [
-      pkgs.swaybg
-      unified-wallpaper
-    ];
+    home.packages = [ pkgs.swaybg unified-wallpaper ];
 
     # Systemd service to restore wallpaper on startup
     systemd.user.services.wallpaper-restore = {
@@ -341,12 +336,11 @@ in
       Service = {
         Type = "oneshot";
         RemainAfterExit = true;
-        ExecStart = "${pkgs.bash}/bin/bash -c 'if [ -f $HOME/.config/wallpaper/current ]; then ${unified-wallpaper}/bin/unified-wallpaper --set \"$(${pkgs.coreutils}/bin/cat $HOME/.config/wallpaper/current)\"; else ${unified-wallpaper}/bin/unified-wallpaper; fi'";
+        ExecStart =
+          "${pkgs.bash}/bin/bash -c 'if [ -f $HOME/.config/wallpaper/current ]; then ${unified-wallpaper}/bin/unified-wallpaper --set \"$(${pkgs.coreutils}/bin/cat $HOME/.config/wallpaper/current)\"; else ${unified-wallpaper}/bin/unified-wallpaper; fi'";
       };
 
-      Install = {
-        WantedBy = [ "graphical-session.target" ];
-      };
+      Install = { WantedBy = [ "graphical-session.target" ]; };
     };
 
     # Systemd service for wallpaper rotation
@@ -382,14 +376,14 @@ in
         Persistent = true;
       };
 
-      Install = {
-        WantedBy = [ "timers.target" ];
-      };
+      Install = { WantedBy = [ "timers.target" ]; };
     };
 
     # Create initial wallpaper config directory
-    home.activation.createWallpaperConfig = lib.hm.dag.entryAfter ["writeBoundary"] ''
-      mkdir -p $HOME/.config/wallpaper
-    '';
+    home.activation.createWallpaperConfig =
+      lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        mkdir -p $HOME/.config/wallpaper
+      '';
   };
 }
+

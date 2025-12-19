@@ -1,10 +1,16 @@
-{ pkgs, inputs, ... }:
+{ pkgs, lib, config, inputs, ... }:
 
+let
+  cfg = config.jtekk.desktop-env;
+  isDesktop = cfg != "server";
+in
 {
   imports = [ inputs.mangowc.nixosModules.mango ];
 
-  programs.mango.enable = true;
+  config = lib.mkIf isDesktop {
+    programs.mango.enable = true;
 
-  environment.systemPackages = with pkgs;
-    [ inputs.mangowc.packages.${pkgs.stdenv.hostPlatform.system}.default ];
+    environment.systemPackages = with pkgs;
+      [ inputs.mangowc.packages.${pkgs.stdenv.hostPlatform.system}.default ];
+  };
 }

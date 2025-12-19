@@ -26,7 +26,7 @@
   selection_fg = "#FFFFFF";    # Pure white for selection
   url = "#00FFFF";
 
-  # Border colors for Hyprland/Mango
+  # Border colors for Mango
   border_active_1 = "#00FFFF";  # Electric Cyan gradient start
   border_active_2 = "#DD00FF";  # Neon Orchid gradient end
   border_inactive = "#33006666"; # Cyber Grape with transparency

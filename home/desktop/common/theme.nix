@@ -2,7 +2,7 @@
 
 let
   customIcons = pkgs.callPackage ../../../home/assets/icons { };
-  colors = config.colorScheme.palette or (import ../../../themes/neuro-fusion.nix);
+  colors = config.theme.colors;
 in
 {
   # Theme packages (fonts are provided by system/defaults/fonts.nix)
