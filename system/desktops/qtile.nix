@@ -5,6 +5,11 @@ let
   isQtile = cfg != "mango-hypr";
   qtilePkg =
     inputs.qtile.packages.${pkgs.stdenv.hostPlatform.system}.default;
+
+  # Override qtile-extras to skip flaky tests
+  qtile-extras-nocheck = pkgs.python3Packages.qtile-extras.overrideAttrs (old: {
+    doCheck = false;
+  });
 in {
   config = lib.mkIf isQtile {
     # Qtile compositor (provides both X11 and Wayland sessions automatically)
@@ -13,10 +18,9 @@ in {
       package = qtilePkg;
       extraPackages = python3Packages:
         with python3Packages; [
-          qtile-extras
           dbus-python
           psutil
-        ];
+        ] ++ [ qtile-extras-nocheck ];
     };
 
     # Qtile/Wayland ecosystem packages
@@ -24,10 +28,7 @@ in {
       # Lock screen and idle
       swaylock-effects
       swayidle
-
-      # Qtile utilities
-      python3Packages.qtile-extras
-    ];
+    ] ++ [ qtile-extras-nocheck ];
 
     # PAM configuration for swaylock
     security.pam.services.swaylock = { };

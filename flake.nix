@@ -101,7 +101,7 @@
             {
               specialisation = {
                 mango-hypr.configuration = {
-                  jtekk.desktop-env = "mango-hypr";
+                  jtekk.desktop-env = lib.mkForce "mango-hypr";
                 };
                 openrgb.configuration = {
                   jtekk.software.openrgb.enable = true;
