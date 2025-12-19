@@ -338,7 +338,7 @@ echo -e "''${CYAN}════════════════════�
 echo -e "                              ''${BOLD}''${WHITE}DESKTOP OPTIONS''${RESET}                                  "
 echo -e "''${CYAN}═══════════════════════════════════════════════════════════════════════════════''${RESET}"
 echo
-echo -e "  ''${BOLD}Available desktops:''${RESET} ''${GREEN}mango''${RESET}, ''${GREEN}hyprland''${RESET}, ''${GREEN}cosmic''${RESET}"
+echo -e "  ''${BOLD}Available desktops:''${RESET} ''${GREEN}mango''${RESET}"
 echo -e "  Replace ''${YELLOW}{desktop}''${RESET} in the command with your preferred window manager"
 echo
 echo -e "''${CYAN}═══════════════════════════════════════════════════════════════════════════════''${RESET}"
@@ -355,7 +355,7 @@ echo -e "                                   ''${BOLD}''${WHITE}NOTES''${RESET}  
 echo -e "''${CYAN}═══════════════════════════════════════════════════════════════════════════════''${RESET}"
 echo
 echo -e "  ''${BOLD}•''${RESET} Themes only change ''${YELLOW}colors''${RESET}, not layouts or behaviors"
-echo -e "  ''${BOLD}•''${RESET} All themes support: ''${GREEN}kitty''${RESET}, ''${GREEN}starship''${RESET}, ''${GREEN}btop''${RESET}, ''${GREEN}hyprlock''${RESET}, ''${GREEN}waybar''${RESET}, ''${GREEN}wofi''${RESET}"
+echo -e "  ''${BOLD}•''${RESET} All themes support: ''${GREEN}kitty''${RESET}, ''${GREEN}starship''${RESET}, ''${GREEN}btop''${RESET}, ''${GREEN}swaylock''${RESET}, ''${GREEN}waybar''${RESET}, ''${GREEN}wofi''${RESET}"
 echo -e "  ''${BOLD}•''${RESET} Each theme includes its own set of ''${YELLOW}wallpapers''${RESET}"
 echo -e "  ''${BOLD}•''${RESET} Current directory: ''${BLUE}$(pwd)''${RESET}"
 echo

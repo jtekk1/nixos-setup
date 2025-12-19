@@ -12,18 +12,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    hyprland = {
-      url = "github:hyprwm/Hyprland/v0.52.2";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     mangowc = {
       url = "github:DreamMaoMao/mangowc/0.10.7";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    qtile = {
-      url = "github:qtile/qtile";
     };
 
     colmena = {
@@ -59,7 +50,7 @@
       lib = nixpkgs.lib;
       system_arch = "x86_64-linux";
 
-      desktopEnvironments = [ "mango" "cosmic" "hyprland" ];
+      desktopEnvironments = [ "mango" ];
 
       # All available themes (imported from theme-configs.nix)
       themes = import ./theme-configs.nix;
@@ -94,15 +85,12 @@
             ({ pkgs, ... }: {
               nixpkgs.overlays =
                 [ (import ./overlays/custom-fixes.nix inputs) ];
-              jtekk.desktop-env = "desktop";
+              jtekk.desktop-env = "mango-hypr";
             })
 
             # Specialisations
             {
               specialisation = {
-                mango-hypr.configuration = {
-                  jtekk.desktop-env = lib.mkForce "mango-hypr";
-                };
                 openrgb.configuration = {
                   jtekk.software.openrgb.enable = true;
                 };

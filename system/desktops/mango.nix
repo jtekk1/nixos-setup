@@ -2,12 +2,12 @@
 
 let
   cfg = config.jtekk.desktop-env;
-  isMangoHypr = cfg == "mango-hypr";
+  isDesktop = cfg != "server";
 in
 {
   imports = [ inputs.mangowc.nixosModules.mango ];
 
-  config = lib.mkIf isMangoHypr {
+  config = lib.mkIf isDesktop {
     programs.mango.enable = true;
 
     environment.systemPackages = with pkgs;

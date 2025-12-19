@@ -150,22 +150,15 @@
       # Execute based on selection
       case $chosen in
           "󰌾 Lock")
-              hyprlock
+              swaylock
               ;;
           "󰍃 Logout")
               # Handle logout based on compositor
               case "$XDG_CURRENT_DESKTOP" in
-                  Hyprland)
-                      hyprctl dispatch exit
-                      ;;
                   mango)
                       # Gracefully stop mango to release GPU/DRM resources
                       systemctl --user stop graphical-session.target 2>/dev/null
                       pkill -SIGTERM mango
-                      ;;
-                  COSMIC)
-                      # COSMIC handles its own session management
-                      cosmic-session exit 2>/dev/null || loginctl terminate-user $USER
                       ;;
                   *)
                       loginctl terminate-user $USER
@@ -207,13 +200,8 @@
 
       # Function to get windows based on compositor
       get_windows() {
-          if [ "$XDG_CURRENT_DESKTOP" = "Hyprland" ]; then
-              # Get Hyprland windows
-              hyprctl clients -j | jq -r '.[] |
-                  "[\(.workspace.name)] \(.class) - \(.title)" +
-                  " [address:\(.address)]"'
-          elif command -v swaymsg &> /dev/null; then
-              # Fallback for sway-compatible compositors
+          if command -v swaymsg &> /dev/null; then
+              # For sway-compatible compositors (including mango)
               swaymsg -t get_tree | jq -r '
                   .. | select(.type? == "con" and .name? != null) |
                   "[\(.workspace)] \(.app_id // .window_properties.class) - \(.name)"'
@@ -228,15 +216,8 @@
 
       # Focus the selected window
       if [ -n "$selected" ]; then
-          if [ "$XDG_CURRENT_DESKTOP" = "Hyprland" ]; then
-              # Extract address from selection
-              address=$(echo "$selected" | grep -o '\[address:0x[0-9a-f]*\]' |
-                        sed 's/\[address://;s/\]//')
-              if [ -n "$address" ]; then
-                  hyprctl dispatch focuswindow "address:$address"
-              fi
-          elif command -v swaymsg &> /dev/null; then
-              # Extract window ID for sway
+          if command -v swaymsg &> /dev/null; then
+              # Extract window ID for sway-compatible compositors
               window_id=$(echo "$selected" | sed 's/.*\[\([0-9]*\)\].*/\1/')
               swaymsg "[con_id=$window_id]" focus
           fi

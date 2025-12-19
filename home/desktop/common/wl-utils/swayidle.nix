@@ -1,8 +1,8 @@
 { pkgs, lib, osConfig ? null, ... }:
 
 let
-  # Only enable for non-mango-hypr desktop environments (e.g., Qtile)
-  isNotMangoHypr = osConfig == null || osConfig.jtekk.desktop-env != "mango-hypr";
+  # Enable for desktop environments
+  isDesktop = osConfig == null || osConfig.jtekk.desktop-env != "server";
 
   swaylock = "${pkgs.swaylock-effects}/bin/swaylock";
   loginctl = "${pkgs.systemd}/bin/loginctl";
@@ -13,7 +13,7 @@ let
   dpmsOn = "${pkgs.wlopm}/bin/wlopm --on '*'";
 
 in {
-  config = lib.mkIf isNotMangoHypr {
+  config = lib.mkIf isDesktop {
     services.swayidle = {
       enable = true;
 

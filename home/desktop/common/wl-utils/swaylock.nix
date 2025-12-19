@@ -1,13 +1,13 @@
 { pkgs, config, lib, osConfig ? null, ... }:
 
 let
-  # Only enable for non-mango-hypr desktop environments (e.g., Qtile)
-  isNotMangoHypr = osConfig == null || osConfig.jtekk.desktop-env != "mango-hypr";
+  # Enable for desktop environments
+  isDesktop = osConfig == null || osConfig.jtekk.desktop-env != "server";
 
   colors = config.theme.colors;
 
 in {
-  config = lib.mkIf isNotMangoHypr {
+  config = lib.mkIf isDesktop {
     programs.swaylock = {
       enable = true;
       package = pkgs.swaylock-effects;

@@ -1,8 +1,8 @@
 { pkgs, config, lib, osConfig ? null, ... }:
 
 let
-  # Only enable for mango-hypr desktop environment
-  isMangoHypr = osConfig != null && osConfig.jtekk.desktop-env == "mango-hypr";
+  # Disabled - Hyprland removed, using swaylock instead
+  enabled = false;
 
   colors = config.theme.colors;
   # Use rgba format for hyprlock
@@ -19,7 +19,7 @@ let
   '';
 
 in {
-  config = lib.mkIf isMangoHypr {
+  config = lib.mkIf enabled {
     # Add wrapper to PATH
     home.packages = [ hyprlock-safe ];
 

@@ -78,9 +78,9 @@ let
       echo "$wallpaper" > "$STATE_FILE"
       echo "$index" > "$INDEX_FILE"
 
-      # Create/update symlink for hyprlock
-      mkdir -p "$HOME/.config/hyprlock"
-      ln -sf "$wallpaper" "$HOME/.config/hyprlock/current-wallpaper"
+      # Create/update symlink for swaylock
+      mkdir -p "$HOME/.config/swaylock"
+      ln -sf "$wallpaper" "$HOME/.config/swaylock/current-wallpaper"
 
       # Add to history (keep last 100 entries)
       echo "$wallpaper" >> "$HISTORY_FILE"

@@ -8,21 +8,6 @@ let
     config.allowUnfree = true;
   };
 in {
-  # Override qtile-extras to skip flaky X11 positioning tests
-  python3 = prev.python3.override {
-    self = final.python3;
-    packageOverrides = pyFinal: pyPrev: {
-      qtile-extras = pyPrev.qtile-extras.overrideAttrs (old: {
-        disabledTests = (old.disabledTests or [ ]) ++ [
-          "test_popup_positioning_relative"
-          "test_widget_init_config"
-        ];
-      });
-    };
-  };
-
-  python3Packages = final.python3.pkgs;
-
   # Use the working pamixer from the stable channel
   pamixer = pkgs-stable.pamixer;
 

@@ -21,7 +21,7 @@
   selection_fg = "#0a0a0f";
   url = "#7ba7d1";
 
-  # Border colors for Hyprland/Mango
+  # Border colors for Mango
   border_active_1 = "#2596be"; # Active border gradient start
   border_active_2 = "#33ccff"; # Active border gradient end
   border_inactive = "#33ccff33"; # Inactive border with transparency

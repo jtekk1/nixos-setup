@@ -17,7 +17,7 @@
     bind=SUPER,v,spawn,~/.local/bin/wofi-clipboard-menu
 
     # Lock screen
-    bind=SUPER+CTRL,Escape,spawn,hyprlock-safe
+    bind=SUPER+CTRL,Escape,spawn,swaylock
 
     # Notification center
     bind=SUPER,backspace,spawn,swaync-client -t

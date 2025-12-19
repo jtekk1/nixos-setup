@@ -1,8 +1,8 @@
 { pkgs, lib, config, osConfig ? null, ... }:
 
 let
-  # Only enable for mango-hypr desktop environment
-  isMangoHypr = osConfig != null && osConfig.jtekk.desktop-env == "mango-hypr";
+  # Disabled - Hyprland removed, using swayidle instead
+  enabled = false;
 
   hyprlock = "hyprlock-safe";  # Uses wrapper with --immediate-render
   loginctl = "${pkgs.systemd}/bin/loginctl";
@@ -23,7 +23,7 @@ let
   '';
 
 in {
-  config = lib.mkIf isMangoHypr {
+  config = lib.mkIf enabled {
     services.hypridle = {
       enable = true;
 
