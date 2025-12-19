@@ -11,7 +11,7 @@
     # Example: DP-1 is 5120px wide with 1.3 scale = 3938 logical pixels
 
     # Main monitor
-    monitorrule=DP-1,0.55,1,center_tile,0,1.3,0,0,5120,2160,120
+    monitorrule=DP-1,0.55,1,center_tile,0,1,0,0,5120,2160,120
 
     # Projector: Single window fullscreen focus (positioned at logical boundary: 5120/1.3 ≈ 3938)
     monitorrule=HDMI-A-2,0.55,1,tile,0,1,3938,0,1920,1080,60
