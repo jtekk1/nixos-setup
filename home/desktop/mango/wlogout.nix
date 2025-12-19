@@ -88,31 +88,31 @@ in {
     }
 
     #lock {
-        background-image: image(url("./icons/lock.png"));
+        background-image: image(url("./icons/lock.jpeg"));
     }
 
     #logout {
-        background-image: image(url("./icons/logout.png"));
+        background-image: image(url("./icons/logout.jpeg"));
     }
 
     #logout:hover {
-        background-image: image(url("./icons/logout.png"));
+        background-image: image(url("./icons/logout.jpeg"));
     }
 
     #suspend {
-        background-image: image(url("./icons/sleep.png"));
+        background-image: image(url("./icons/sleep.jpeg"));
     }
 
     #shutdown {
-        background-image: image(url("./icons/power.png"));
+        background-image: image(url("./icons/power.jpeg"));
     }
 
     #reboot {
-        background-image: image(url("./icons/restart.png"));
+        background-image: image(url("./icons/restart.jpeg"));
     }
 
     #hibernate {
-        background-image: image(url("./icons/hibernate.png"));
+        background-image: image(url("./icons/hibernate.jpeg"));
     }
   '';
 }

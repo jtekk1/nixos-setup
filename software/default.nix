@@ -13,6 +13,5 @@
     # Optional software (guarded by lib.mkIf)
     ./optional/teamviewer.nix
     ./optional/openrgb.nix
-    ./optional/winboat.nix
   ];
 }

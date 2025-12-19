@@ -27,7 +27,7 @@
     bind=SUPER+SHIFT,b,spawn,killall -SIGUSR1 waybar
 
     # Power menu
-    bind=SUPER,Escape,spawn,~/.local/bin/wofi-power-menu
+    bind=SUPER,Escape,spawn,wlogout -c ~/.config/mango/wlogout/layout -s ~/.config/mango/wlogout/style.css
 
     # Mouse bindings
     mousebind=SUPER,btn_left,moveresize,curmove

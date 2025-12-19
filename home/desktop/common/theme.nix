@@ -68,20 +68,20 @@ in
     };
 
     gtk3.extraCss = ''
-      /* Override selection colors to match neuro-fusion theme */
+      /* Override selection colors to match theme */
       selection,
       *:selected,
       *:selected:focus {
-        background-color: ${colors.selection_bg};
-        color: ${colors.selection_fg};
+        background-color: ${colors.accent_primary};
+        color: ${colors.bg_primary};
       }
 
       /* Text selection specifically */
       textview text selection,
       entry selection,
       label selection {
-        background-color: ${colors.selection_bg};
-        color: ${colors.selection_fg};
+        background-color: ${colors.accent_primary};
+        color: ${colors.bg_primary};
       }
     '';
 
@@ -90,20 +90,20 @@ in
     };
 
     gtk4.extraCss = ''
-      /* Override selection colors to match neuro-fusion theme */
+      /* Override selection colors to match theme */
       selection,
       *:selected,
       *:selected:focus {
-        background-color: ${colors.selection_bg};
-        color: ${colors.selection_fg};
+        background-color: ${colors.accent_primary};
+        color: ${colors.bg_primary};
       }
 
       /* Text selection specifically */
       textview text selection,
       entry selection,
       label selection {
-        background-color: ${colors.selection_bg};
-        color: ${colors.selection_fg};
+        background-color: ${colors.accent_primary};
+        color: ${colors.bg_primary};
       }
     '';
   };
