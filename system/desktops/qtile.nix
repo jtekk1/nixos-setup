@@ -3,15 +3,14 @@
 let
   cfg = config.jtekk.desktop-env;
   isQtile = cfg != "mango-hypr";
-  qtileFullPkg =
-    inputs.qtile.packages.${pkgs.stdenv.hostPlatform.system}.qtile-full;
+  qtilePkg =
+    inputs.qtile.packages.${pkgs.stdenv.hostPlatform.system}.default;
 in {
   config = lib.mkIf isQtile {
-    # Qtile Wayland compositor
+    # Qtile compositor (provides both X11 and Wayland sessions automatically)
     services.xserver.windowManager.qtile = {
       enable = true;
-      package = qtileFullPkg;
-      backend = "wayland";
+      package = qtilePkg;
       extraPackages = python3Packages:
         with python3Packages; [
           qtile-extras
@@ -19,21 +18,6 @@ in {
           psutil
         ];
     };
-
-    # Create Wayland session entry for greetd/regreet
-    services.xserver.displayManager.sessionPackages = [
-      (pkgs.runCommand "qtile-wayland-session" { } ''
-        mkdir -p $out/share/wayland-sessions
-        cat > $out/share/wayland-sessions/qtile-wayland.desktop <<EOF
-        [Desktop Entry]
-        Name=QTile Wayland
-        Comment=Qtile tiling window manager on Wayland
-        Exec=${qtileFullPkg}/bin/qtile start -b wayland
-        Type=Application
-        DesktopNames=Qtile
-        EOF
-      '')
-    ];
 
     # Qtile/Wayland ecosystem packages
     environment.systemPackages = with pkgs; [
