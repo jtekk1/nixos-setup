@@ -1,9 +1,7 @@
 { pkgs, ... }:
 
 {
-  services.displayManager.cosmic-greeter.enable = true;
-
-  # Enable PackageKit for package management tools (cosmic-store, etc.)
+  # Enable PackageKit for package management tools
   services.packagekit.enable = true;
 
   # Enable XWayland for X11 app compatibility

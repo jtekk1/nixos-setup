@@ -1,6 +1,9 @@
-{ pkgs, config, lib, ... }:
+{ pkgs, config, lib, osConfig ? null, ... }:
 
 let
+  # Only enable for mango-hypr desktop environment
+  isMangoHypr = osConfig != null && osConfig.jtekk.desktop-env == "mango-hypr";
+
   colors = config.theme.colors;
   # Use rgba format for hyprlock
   color = colors.rgba.fg_secondary 1.0;
@@ -16,8 +19,9 @@ let
   '';
 
 in {
-  # Add wrapper to PATH
-  home.packages = [ hyprlock-safe ];
+  config = lib.mkIf isMangoHypr {
+    # Add wrapper to PATH
+    home.packages = [ hyprlock-safe ];
 
   # Copy backgrounds to Pictures directory
   home.file = {
@@ -104,5 +108,6 @@ in {
         };
       };
     };
+  };
   };
 }

@@ -22,6 +22,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    qtile = {
+      url = "github:qtile/qtile";
+    };
+
     colmena = {
       url = "github:zhaofengli/colmena";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -93,9 +97,12 @@
               jtekk.desktop-env = "desktop";
             })
 
-            # Specialisations for optional services
+            # Specialisations
             {
               specialisation = {
+                mango-hypr.configuration = {
+                  jtekk.desktop-env = "mango-hypr";
+                };
                 openrgb.configuration = {
                   jtekk.software.openrgb.enable = true;
                 };

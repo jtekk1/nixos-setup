@@ -4,9 +4,10 @@
   imports = [
     ./common.nix
     ./xdg.nix
-    ./cosmic.nix
+    ./qtile.nix
     ./hyprland.nix
     ./mango.nix
     ./deployment.nix
+    ../greeters
   ];
 }
