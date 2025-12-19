@@ -25,7 +25,6 @@
       ];
     })
 
-
     # Image editing
     gimp
     inkscape

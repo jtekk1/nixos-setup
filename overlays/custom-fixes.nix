@@ -33,9 +33,6 @@ in {
   #   npmDepsHash = "sha256-...";
   # });
 
-  # Bluefin wallpapers - dinosaur images from Universal Blue's Bluefin project
-  bluefin-wallpapers = prev.callPackage ../software/bluefin-wallpapers.nix { };
-
   # OpenRGB git version - for newer hardware support (B850 chipset, DDR5 RGB)
   openrgb-git = prev.openrgb.overrideAttrs (oldAttrs: rec {
     version = "git-unstable-2025-01-27";
