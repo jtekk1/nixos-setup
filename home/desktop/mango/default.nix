@@ -12,6 +12,6 @@
     ./monitors.nix
     # ./waybar.nix  # Disabled
     ./windowrules.nix
-    # ./wlogout.nix  # Replaced by wofi power menu
+    ./wlogout.nix
   ];
 }

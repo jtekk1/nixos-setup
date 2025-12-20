@@ -4,7 +4,8 @@ let nixSetupsPath = "${config.home.homeDirectory}/NixSetups";
 in {
   # Symlink wlogout icons from NixSetups assets
   home.file.".config/mango/wlogout/icons".source =
-    config.lib.file.mkOutOfStoreSymlink "${nixSetupsPath}/home/assets/wlogout";
+    config.lib.file.mkOutOfStoreSymlink
+    "${nixSetupsPath}/home/assets/wlogout/mango";
 
   # Wlogout layout configuration
   home.file.".config/mango/wlogout/layout".text = ''
@@ -58,7 +59,7 @@ in {
         font-size: 12pt;
         font-weight: bold;
         color: #00FFFF;
-        background-color: rgba(20, 0, 30, 0.85);
+        background-color: rgba(20, 0, 30, 1.00);
     }
 
     button {
@@ -66,53 +67,44 @@ in {
         background-position: center;
         font-size: 40px;
         background-size: 60%;
-        border: 3px solid rgba(0, 255, 255, 0.3);
-        color: #00FFFF;
+        color: #FFFFFF;
         text-shadow: 0 0 8px rgba(0, 255, 255, 0.6);
-        border-radius: 20px;
-        background-color: rgba(0, 255, 255, 0.05);
-        margin-top: 120px;
-        margin-bottom: 120px;
-        transition: all 0.3s cubic-bezier(.55, 0.0, .28, 1.682), box-shadow 0.5s ease-in;
-        box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
     }
 
     button:hover {
-        background-color: rgba(221, 0, 255, 0.35);
         background-size: 80%;
-        border: 3px solid rgba(221, 0, 255, 0.8);
-        color: #DD00FF;
+        color: #ffffff;
         text-shadow: 0 0 12px rgba(221, 0, 255, 0.8);
-        box-shadow: 0 0 25px rgba(221, 0, 255, 0.5);
+        box-shadow: 0 0 25px rgba(0, 255, 255, 0.5);
         transition: all 0.3s cubic-bezier(.55, 0.0, .28, 1.682), box-shadow 0.5s ease-in;
     }
 
     #lock {
-        background-image: image(url("./icons/lock.jpeg"));
+        background-image: image(url("${nixSetupsPath}/home/assets/wlogout/mango/lock.png"));
     }
 
     #logout {
-        background-image: image(url("./icons/logout.jpeg"));
+        background-image: image(url("${nixSetupsPath}/home/assets/wlogout/mango/logout.png"));
     }
 
     #logout:hover {
-        background-image: image(url("./icons/logout.jpeg"));
+        background-image: image(url("${nixSetupsPath}/home/assets/wlogout/mango/logout.png"));
     }
 
     #suspend {
-        background-image: image(url("./icons/sleep.jpeg"));
+        background-image: image(url("${nixSetupsPath}/home/assets/wlogout/mango/sleep.png"));
     }
 
     #shutdown {
-        background-image: image(url("./icons/power.jpeg"));
+        background-image: image(url("${nixSetupsPath}/home/assets/wlogout/mango/power.png"));
     }
 
     #reboot {
-        background-image: image(url("./icons/restart.jpeg"));
+        background-image: image(url("${nixSetupsPath}/home/assets/wlogout/mango/restart.png"));
     }
 
     #hibernate {
-        background-image: image(url("./icons/hibernate.jpeg"));
+        background-image: image(url("${nixSetupsPath}/home/assets/wlogout/mango/hibernate.png"));
     }
   '';
 }

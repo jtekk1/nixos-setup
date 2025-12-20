@@ -33,7 +33,7 @@ in {
 
     # Effects (blur disabled by default in mango-config, but we enable it)
     blur=1
-    blur_layer=1
+    blur_layer=0
     blur_optimized=1
     blur_params_num_passes=3
     blur_params_radius=5
