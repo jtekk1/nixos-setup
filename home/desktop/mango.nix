@@ -7,8 +7,9 @@
     ./mango
   ];
 
-  # Enable swww wallpaper management for mango
+  # Enable swaybg wallpaper management for mango
   programs.wallpaper.enable = true;
+  programs.wallpaper.autoRotate.enable = false;
 
   # Additional Mango-specific packages
   home.packages = with pkgs; [
