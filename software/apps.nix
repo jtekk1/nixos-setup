@@ -71,7 +71,7 @@
 
     # Desktop utilities
     nwg-look # GTK theme settings
-    gemini-cli # AI CLI tool
+    # gemini-cli # AI CLI tool - temporarily disabled due to npm deps hash mismatch
     wl-screenrec # Wayland screen recorder
   ];
 }

@@ -1,6 +1,17 @@
-{ config, pkgs, home-manager, ... }:
+{ config, pkgs, osConfig ? null, ... }:
 
-let colors = config.theme.colors;
+let
+  colors = config.theme.colors;
+  hostname = if osConfig != null then osConfig.networking.hostName else "unknown";
+
+  hostInfo = {
+    deepspace = { pc = "Custom Built on ThermalTake 600"; chassis = "ThermalTake 600"; };
+    beelink = { pc = "Beelink SER8"; chassis = "{1}"; };
+    tank = { pc = "Minisforum N5 PRO NAS"; chassis = "{1}"; };
+    mini-me = { pc = "Beelink ME Mini"; chassis = "{1}"; };
+  };
+
+  currentHost = hostInfo.${hostname} or { pc = "{1}"; chassis = "{1}"; };
 in {
   home.packages = [ pkgs.fastfetch ];
 
@@ -101,14 +112,14 @@ in {
         key = " 󰪫 PC ";
         keyIcon = "";
         keyColor = colors.accent_secondary;
-        format = "Custom Built";
+        format = currentHost.pc;
       }
       {
         type = "chassis";
         key = "   ├󰇅 ";
         keyIcon = "";
         keyColor = colors.accent_secondary;
-        format = "ThermalTake 600";
+        format = currentHost.chassis;
       }
       {
         type = "board";

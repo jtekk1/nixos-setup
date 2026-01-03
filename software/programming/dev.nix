@@ -3,7 +3,7 @@
 {
   environment.systemPackages = with pkgs; [
     claude-code
-    gemini-cli
+    # gemini-cli # temporarily disabled due to npm deps hash mismatch
     crush
     open-interpreter
     neovim

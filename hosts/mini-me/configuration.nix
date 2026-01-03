@@ -1,11 +1,9 @@
 { config, lib, pkgs, networkConfig, ... }:
 
-let
-  hostCfg = networkConfig.hosts.mini-me;
-in
-{
+let hostCfg = networkConfig.hosts.mini-me;
+in {
   imports = [
-    ./disko-config-zfs.nix  # ZFS production config
+    ./disko-config-zfs.nix # ZFS production config
     ../../system/server
   ];
 
@@ -29,8 +27,8 @@ in
   # Ensure networking service is enabled
   systemd.services."network-addresses-${hostCfg.interface}".enable = true;
 
-  # Use newer kernel (6.17) with ZFS unstable (2.4.0-rc3) which supports it
-  boot.kernelPackages = pkgs.linuxPackages_6_17;
+  # Use 6.12 kernel for ZFS compatibility
+  boot.kernelPackages = pkgs.linuxPackages_6_12;
 
   # ZFS configuration
   networking.hostId = hostCfg.hostId;
@@ -45,11 +43,11 @@ in
   # ZFS automatic snapshots
   services.zfs.autoSnapshot = {
     enable = true;
-    frequent = 4;   # Keep 4 15-minute snapshots
-    hourly = 24;    # Keep 24 hourly snapshots
-    daily = 7;      # Keep 7 daily snapshots
-    weekly = 4;     # Keep 4 weekly snapshots
-    monthly = 12;   # Keep 12 monthly snapshots
+    frequent = 4; # Keep 4 15-minute snapshots
+    hourly = 24; # Keep 24 hourly snapshots
+    daily = 7; # Keep 7 daily snapshots
+    weekly = 4; # Keep 4 weekly snapshots
+    monthly = 12; # Keep 12 monthly snapshots
   };
 
   # Limit ZFS ARC to 6GB (tight RAM situation)
@@ -61,9 +59,7 @@ in
   boot.zfs.forceImportAll = false;
 
   # Increase timeout for ZFS mounts
-  systemd.services."zfs-mount".serviceConfig = {
-    TimeoutStartSec = "5min";
-  };
+  systemd.services."zfs-mount".serviceConfig = { TimeoutStartSec = "5min"; };
 
   # Configure ZFS legacy mountpoints (prevents systemd mount race)
   # Set mountpoints after pool is imported

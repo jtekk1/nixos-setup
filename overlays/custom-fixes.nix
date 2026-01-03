@@ -35,13 +35,13 @@ in {
 
   # OpenRGB git version - for newer hardware support (B850 chipset, DDR5 RGB)
   openrgb-git = prev.openrgb.overrideAttrs (oldAttrs: rec {
-    version = "git-unstable-2025-01-27";
+    version = "git-unstable-2026-01-02";
 
     src = prev.fetchFromGitHub {
       owner = "CalcProgrammer1";
       repo = "OpenRGB";
       rev = "master";
-      sha256 = "sha256-brEt1DLAEn9qfFpw9SR40TocKPG6ku5u57wwEZpyHHo=";
+      sha256 = "sha256-nOjdeAXNxpgav8xGUjiOx5OmejLEeACulb6BSHDwm4I=";
     };
 
     # Remove patches that don't apply to git version
@@ -63,13 +63,13 @@ in {
   # OpenRGB with plugins - git version
   openrgb-with-all-plugins-git = prev.openrgb-with-all-plugins.overrideAttrs
     (oldAttrs: rec {
-      version = "git-unstable-2025-01-27";
+      version = "git-unstable-2026-01-02";
 
       src = prev.fetchFromGitHub {
         owner = "CalcProgrammer1";
         repo = "OpenRGB";
         rev = "master";
-        sha256 = "sha256-brEt1DLAEn9qfFpw9SR40TocKPG6ku5u57wwEZpyHHo=";
+        sha256 = "sha256-nOjdeAXNxpgav8xGUjiOx5OmejLEeACulb6BSHDwm4I=";
       };
 
       # Remove patches that don't apply to git version

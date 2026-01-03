@@ -39,7 +39,7 @@ in {
   environment.etc."xdg/autostart/blueman.desktop".text = "";
 
   # Pin to 6.17 until xpadneo is fixed for 6.18+
-  boot.kernelPackages = pkgs.linuxPackages_6_17;
+  boot.kernelPackages = pkgs.linuxPackages_6_18;
 
   # Disable Bluetooth USB autosuspend to prevent ZSA keyboard disconnection issues
   boot.kernelParams = [ "btusb.enable_autosuspend=n" ];
