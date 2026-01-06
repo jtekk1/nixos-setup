@@ -2,7 +2,7 @@
 
 {
   services.ollama = {
-    enable = true;
-    package = pkgs.ollama-rocm;  # ROCm acceleration (was: acceleration = "rocm")
+    enable = false;  # Temporarily disabled - may conflict with wlroots renderer
+    # package = pkgs.ollama-rocm;  # ROCm acceleration (was: acceleration = "rocm")
   };
 }

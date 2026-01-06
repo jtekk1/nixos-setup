@@ -1,6 +1,12 @@
 { pkgs, ... }:
 
 {
+  # Wayland environment variables (must be at system level for greetd/PAM)
+  environment.sessionVariables = {
+    NIXOS_OZONE_WL = "1";
+    MOZ_ENABLE_WAYLAND = "1";
+  };
+
   # Enable PackageKit for package management tools
   services.packagekit.enable = true;
 

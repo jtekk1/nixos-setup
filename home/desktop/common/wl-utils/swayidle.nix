@@ -17,11 +17,11 @@ in {
     services.swayidle = {
       enable = true;
 
-      events = {
-        before-sleep = "${loginctl} lock-session";
-        after-resume = "${dpmsOn}";
-        lock = "${swaylock} -f";
-      };
+      events = [
+        { event = "before-sleep"; command = "${loginctl} lock-session"; }
+        { event = "after-resume"; command = "${dpmsOn}"; }
+        { event = "lock"; command = "${swaylock} -f"; }
+      ];
 
       timeouts = [
         # Lock screen after 5 minutes

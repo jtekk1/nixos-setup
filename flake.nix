@@ -3,17 +3,17 @@
 
   inputs = {
 
-    nixpkgs = { url = "github:NixOS/nixpkgs/nixos-unstable"; };
+    nixpkgs = { url = "github:NixOS/nixpkgs/nixos-25.11"; };
 
     nixpkgs-stable = { url = "github:NixOS/nixpkgs/nixos-25.11"; };
 
     home-manager = {
-      url = "github:nix-community/home-manager/master";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     mangowc = {
-      url = "github:DreamMaoMao/mangowc/0.10.7";
+      url = "github:DreamMaoMao/mangowc";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -33,7 +33,7 @@
     };
 
     nixvim = {
-      url = "github:nix-community/nixvim";
+      url = "github:nix-community/nixvim/nixos-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -128,7 +128,10 @@
             overlays = [ (import ./overlays/custom-fixes.nix inputs) ];
             config.allowUnfree = true;
           };
-          extraSpecialArgs = { inherit inputs theme isDesktop; osConfig = null; };
+          extraSpecialArgs = {
+            inherit inputs theme isDesktop;
+            osConfig = null;
+          };
           modules = [ ./home ];
         };
 
