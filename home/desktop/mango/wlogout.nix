@@ -1,13 +1,29 @@
-{ config, ... }:
+{ config, lib, ... }:
 
 let
   nixSetupsPath = "${config.home.homeDirectory}/NixSetups";
   colors = config.theme.colors;
+  themeSettings = import ../../../desktop-theme-settings.nix;
+  wlogoutTheme = themeSettings.wlogout-theme;
+
+  # Path to wlogout theme assets
+  themePath = ../../../home/assets/wlogout + "/${wlogoutTheme}";
+
+  # Validate theme exists at build time
+  themeExists = builtins.pathExists themePath;
 in {
+  assertions = [{
+    assertion = themeExists;
+    message = ''
+      wlogout theme '${wlogoutTheme}' not found!
+      Expected path: home/assets/wlogout/${wlogoutTheme}
+      Available themes: ${builtins.concatStringsSep ", " (builtins.attrNames (builtins.readDir ../../../home/assets/wlogout))}
+    '';
+  }];
   # Symlink wlogout icons from NixSetups assets
   home.file.".config/mango/wlogout/icons".source =
     config.lib.file.mkOutOfStoreSymlink
-    "${nixSetupsPath}/home/assets/wlogout/mango";
+    "${nixSetupsPath}/home/assets/wlogout/${wlogoutTheme}";
 
   # Wlogout layout configuration
   home.file.".config/mango/wlogout/layout".text = ''
@@ -82,31 +98,31 @@ in {
     }
 
     #lock {
-        background-image: image(url("${nixSetupsPath}/home/assets/wlogout/mango/lock.png"));
+        background-image: image(url("${nixSetupsPath}/home/assets/wlogout/${wlogoutTheme}/lock.png"));
     }
 
     #logout {
-        background-image: image(url("${nixSetupsPath}/home/assets/wlogout/mango/logout.png"));
+        background-image: image(url("${nixSetupsPath}/home/assets/wlogout/${wlogoutTheme}/logout.png"));
     }
 
     #logout:hover {
-        background-image: image(url("${nixSetupsPath}/home/assets/wlogout/mango/logout.png"));
+        background-image: image(url("${nixSetupsPath}/home/assets/wlogout/${wlogoutTheme}/logout.png"));
     }
 
     #suspend {
-        background-image: image(url("${nixSetupsPath}/home/assets/wlogout/mango/sleep.png"));
+        background-image: image(url("${nixSetupsPath}/home/assets/wlogout/${wlogoutTheme}/sleep.png"));
     }
 
     #shutdown {
-        background-image: image(url("${nixSetupsPath}/home/assets/wlogout/mango/power.png"));
+        background-image: image(url("${nixSetupsPath}/home/assets/wlogout/${wlogoutTheme}/power.png"));
     }
 
     #reboot {
-        background-image: image(url("${nixSetupsPath}/home/assets/wlogout/mango/restart.png"));
+        background-image: image(url("${nixSetupsPath}/home/assets/wlogout/${wlogoutTheme}/restart.png"));
     }
 
     #hibernate {
-        background-image: image(url("${nixSetupsPath}/home/assets/wlogout/mango/hibernate.png"));
+        background-image: image(url("${nixSetupsPath}/home/assets/wlogout/${wlogoutTheme}/hibernate.png"));
     }
   '';
 }

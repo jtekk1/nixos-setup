@@ -11,7 +11,6 @@
     ./screenshot.nix
     ./swayosd.nix
     ./uwsm.nix
-    ./wallpaper.nix
     ./wlsunset.nix
     ./status-weather.nix
     ./wofi.nix

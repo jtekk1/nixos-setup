@@ -9,7 +9,7 @@ in {
     ../../hardware/yubikey.nix
     ../../system/core
     ../../system/core/audio-n-wifi.nix # Audio (PipeWire) and WiFi (iwd) - desktop only
-    inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t480
+    inputs.nixos-hardware.nixosModules.lenovo-thinkpad-t480s
   ];
 
   networking.hostName = "thinkpad";

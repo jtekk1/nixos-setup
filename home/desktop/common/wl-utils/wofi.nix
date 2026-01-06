@@ -193,38 +193,6 @@
     '';
   };
 
-  home.file.".local/bin/wofi-window-switcher" = {
-    executable = true;
-    text = ''
-      #!/usr/bin/env bash
-
-      # Function to get windows based on compositor
-      get_windows() {
-          if command -v swaymsg &> /dev/null; then
-              # For sway-compatible compositors (including mango)
-              swaymsg -t get_tree | jq -r '
-                  .. | select(.type? == "con" and .name? != null) |
-                  "[\(.workspace)] \(.app_id // .window_properties.class) - \(.name)"'
-          else
-              echo "Window switching not supported for this compositor"
-              exit 1
-          fi
-      }
-
-      # Show window list and get selection
-      selected=$(get_windows | wofi --dmenu --prompt="Windows" --lines=10)
-
-      # Focus the selected window
-      if [ -n "$selected" ]; then
-          if command -v swaymsg &> /dev/null; then
-              # Extract window ID for sway-compatible compositors
-              window_id=$(echo "$selected" | sed 's/.*\[\([0-9]*\)\].*/\1/')
-              swaymsg "[con_id=$window_id]" focus
-          fi
-      fi
-    '';
-  };
-
   # Enable cliphist service for clipboard history
   systemd.user.services.cliphist = {
     Unit = {

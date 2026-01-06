@@ -1,8 +1,6 @@
 { pkgs, inputs, ... }:
 
-let cutacha = inputs.cutacha.packages.${pkgs.system}.default;
-
-in {
+{
   wayland.windowManager.mango.autostart_sh = ''
     # Autostart script for Mango WM (no shebang needed)
     set +e
@@ -21,8 +19,8 @@ in {
     # Night light filter
     ${pkgs.wlsunset}/bin/wlsunset -T 4501 -t 4500 >/dev/null 2>&1 &
 
-    # Cutacha status bar
-    ${cutacha}/bin/cutacha >/dev/null 2>&1 &
+    # Waybar status bar
+    ${pkgs.waybar}/bin/waybar >/dev/null 2>&1 &
 
     # XWayland DPI scaling
     echo "Xft.dpi: 120" | ${pkgs.xorg.xrdb}/bin/xrdb -merge >/dev/null 2>&1

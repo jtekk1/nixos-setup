@@ -61,12 +61,5 @@ in {
         timestr = "%H:%M";
       };
     };
-
-    # Copy backgrounds
-    home.file = {
-      "Pictures/backgrounds/1.png".source = ../../../assets/backgrounds/1.png;
-      "Pictures/backgrounds/2.png".source = ../../../assets/backgrounds/2.png;
-      "Pictures/backgrounds/3.png".source = ../../../assets/backgrounds/3.png;
-    };
   };
 }

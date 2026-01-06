@@ -10,7 +10,7 @@
     ./env.nix
     ./looknfeel.nix
     ./monitors.nix
-    # ./waybar.nix  # Disabled
+    ./waybar.nix
     ./windowrules.nix
     ./wlogout.nix
   ];
