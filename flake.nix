@@ -41,10 +41,14 @@
       url = "git+https://git.jtekk.dev/TekkOS/cutacha";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nixos-hardware = {
+      url = "github:NixOS/nixos-hardware/master";
+    };
   };
 
-  outputs =
-    { self, nixpkgs, home-manager, colmena, sops-nix, disko, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, colmena, sops-nix, disko
+    , nixos-hardware, ... }@inputs:
 
     let
       lib = nixpkgs.lib;
@@ -144,21 +148,23 @@
         let theme = lib.removePrefix "jtekk-" name;
         in mkHome { inherit theme; });
 
-      nixosConfigurations = {
+      nixosConfigurations = let
+        mkThemedConfigs = hostname:
+          lib.genAttrs (map (t: "${hostname}-${t}") themes) (name:
+            let theme = lib.removePrefix "${hostname}-" name;
+            in mkSystem { inherit hostname theme; });
+      in {
+
         # Desktop configuration (default theme)
         "deepspace" = mkSystem { hostname = "deepspace"; };
+        "thinkpad" = mkSystem { hostname = "thinkpad"; };
 
         # Server configurations
         # Only used as part of initial setups (nixos-anywhere)
         "beelink" = mkServer { hostname = "beelink"; };
         "mini-me" = mkServer { hostname = "mini-me"; };
         "tank" = mkServer { hostname = "tank"; };
-      } // lib.genAttrs (map (t: "deepspace-${t}") themes) (name:
-        let theme = lib.removePrefix "deepspace-" name;
-        in mkSystem {
-          hostname = "deepspace";
-          inherit theme;
-        });
+      } // (mkThemedConfigs "deepspace") // (mkThemedConfigs "thinkpad");
 
       colmena = import ./hive.nix {
         inherit nixpkgs home-manager disko inputs system_arch;

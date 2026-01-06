@@ -3,6 +3,7 @@
 {
   imports = [
     ./clipboard.nix
+    ./kanshi.nix
     ./swayidle.nix
     ./swaylock.nix
     ./idle-inhibit.nix

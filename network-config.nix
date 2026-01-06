@@ -30,10 +30,10 @@
   # Network settings
   gateway = "192.168.0.1";
   nameservers = [
+    "8.8.8.8"
     "192.168.0.250"
     "192.168.0.251"
     "1.1.1.1"
-    "8.8.8.8"
   ]; # Blocky (primary, secondary) + Cloudflare fallback
   prefixLength = 24;
   lan = "192.168.0.0/24";
