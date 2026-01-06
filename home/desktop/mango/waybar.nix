@@ -1,29 +1,36 @@
-{ pkgs, config, ... }:
+{ pkgs, config, osConfig ? null, ... }:
 
-{
+let
+  colors = config.theme.colors;
+  hostname = if osConfig != null then osConfig.networking.hostName else "unknown";
+  isThinkpad = hostname == "thinkpad";
+
+  # Theme colors with fallbacks
+  primaryColor = if config.theme.name == "neuro-fusion" && colors.mangoOverrides != null
+                 then colors.mangoOverrides.focuscolor
+                 else colors.accent_primary;
+  urgentColor = if config.theme.name == "neuro-fusion" && colors.mangoOverrides != null
+                then colors.mangoOverrides.urgentcolor
+                else colors.accent_secondary;
+in {
   programs.waybar = {
     enable = true;
-    systemd.enable = false;  # Waybar is started by Mango's autostart script, not systemd
+    systemd.enable = false;  # Waybar started manually via toggle-waybar or autostart
 
     settings = {
       mainBar = {
-        layer = "top";
-        position = "top";
-        exclusive = true;
-        passthrough = false;
-        gtk-layer-shell = true;
-        ipc = false;
         reload_style_on_change = true;
-        height = 36;
+        position = "top";
+        mode = "dock";
+        spacing = 0;
 
         modules-left = [
           "custom/power"
           "cpu"
           "memory"
           "disk"
-          "network"
+          "temperature"
           "dwl/window"
-          "custom/monitor-toggle"
         ];
 
         modules-center = [
@@ -31,477 +38,415 @@
         ];
 
         modules-right = [
-          "mpris"
-          "group/tray"
-          "bluetooth"
+          "tray"
+          "mpd"
+          "idle_inhibitor"
+          "keyboard-state"
           "pulseaudio"
-          "custom/weather"
-          "clock"
-        ];
-	
-        "dwl/window" = {
-          format = "{layout}";
-          rewrite = {
-            "CT" = "CTILE";
-            "RT" = "RTILE";
-            "VT" = "VTILE";
-            "T" = "TLING";
-            "VS" = "VSCRL";
-            "S" = "SCROL";
-            "G" = "GRID-";
-            "VG" = "VGRID";
-            "K" = "DECK-";
-            "VK" = "VDECK";
-            "M" = "MONOC";
-          };
-          menu = "on-click";
-          menu-file = "/home/jtekk/.config/waybar/mango-menu.xml";
-          "menu-actions" = {
-            "tiling" = "mmsg -l T";
-            "centerTiling" = "mmsg -l CT";
-            "rightTiling" = "mmsg -l RT";
-            "verticalTiling" = "mmsg -l VT";
-            "scrolling" = "mmsg -l S";
-            "verticalScrolling" = "mmsg -l VS";
-            "vrid" = "mmsg -l G";
-            "verticalGrid" = "mmsg -l VG";
-            "deck" = "mmsg -l K";
-            "verticalDeck" = "mmsg -l VK";
-            "monocle" = "mmsg -l M";
-          };
-          swap-icon-label = false;
-        };
+          "network"
+        ] ++ (if isThinkpad then [ "battery" ] else [])
+          ++ [ "clock" ];
 
+        # Workspaces
         "ext/workspaces" = {
           format = "{icon}";
+          active-only = false;
           ignore-hidden = false;
           on-click = "activate";
           on-click-right = "deactivate";
           sort-by-id = true;
           format-icons = {
-            "1" = "1: ";
-            "2" = "2: ";
-            "3" = "3: ";
-            "4" = "4: 󰭹";
-            "5" = "5: ";
-            "6" = "6: ";
-            "7" = "7: ";
-            "8" = "8";
-            "9" = "9";
+            default = "";
+            active = "";
+            urgent = "";
           };
         };
 
-        "group/system" = {
-          orientation = "inherit";
-          drawer = {
-            transition-duration = 300;
+        # Window/Layout display with menu
+        "dwl/window" = {
+          format = "{layout}";
+          menu = "on-click";
+          menu-file = "$HOME/.config/waybar/mango-menu.xml";
+          menu-actions = {
+            tiling = "mmsg -l T";
+            tgmix = "mmsg -l TG";
+            centerTiling = "mmsg -l CT";
+            rightTiling = "mmsg -l RT";
+            verticalTiling = "mmsg -l VT";
+            scrolling = "mmsg -l S";
+            verticalScrolling = "mmsg -l VS";
+            grid = "mmsg -l G";
+            verticalGrid = "mmsg -l VG";
+            deck = "mmsg -l K";
+            verticalDeck = "mmsg -l VK";
+            monocle = "mmsg -l M";
           };
-          modules = [
-            "custom/system-icon"
-            "cpu"
-            "temperature"
-            "memory"
-            "disk"
-          ];
+          rewrite = {
+            "TG" = "󰨇 TGMX";
+            "CT" = " CTIL";
+            "G" = "󰋁 GRID";
+            "K" = " DECK";
+            "M" = "󰍹 MONO";
+            "RT" = " RTIL";
+            "S" = " SCRL";
+            "T" = " TILE";
+            "VG" = "󰋁 VGRD";
+            "VK" = " VDCK";
+            "VS" = "󰽿 VSCR";
+            "VT" = "󱂩 VTIL";
+          };
         };
 
-        "custom/system-icon" = {
-          format = "  󱎴  ";
+        # Keyboard state
+        keyboard-state = {
+          numlock = true;
+          capslock = true;
+          scrolllock = true;
+          format = {
+            numlock = "  {icon} ";
+            capslock = " 󰪛 {icon} ";
+            scrolllock = " 󰹹 {icon} ";
+          };
+          format-icons = {
+            locked = "";
+            unlocked = "";
+          };
         };
 
+        # MPD
+        mpd = {
+          format = "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ";
+          format-disconnected = "Disconnected ";
+          format-stopped = "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ";
+          unknown-tag = "N/A";
+          interval = 5;
+          consume-icons = { on = " "; };
+          random-icons = { off = "<span color=\"#f53c3c\"></span> "; on = " "; };
+          repeat-icons = { on = " "; };
+          single-icons = { on = "1 "; };
+          state-icons = { paused = ""; playing = ""; };
+          tooltip-format = "MPD (connected)";
+          tooltip-format-disconnected = "MPD (disconnected)";
+        };
+
+        # Idle inhibitor
+        idle_inhibitor = {
+          format = "idle: {icon}";
+          format-icons = {
+            activated = "";
+            deactivated = "";
+          };
+        };
+
+        # System tray
+        tray = {
+          icon-size = 21;
+          spacing = 10;
+        };
+
+        # Clock
+        clock = {
+          format = " {:%H:%M}";
+          format-alt = " {:%a %d |  %H:%M}";
+          tooltip-format = "<big>{:%b | %d | %Y}</big>\n\n<tt><small>{calendar}</small></tt>";
+          calendar = {
+            mode = "month";
+            mode-mon-col = 3;
+            weeks-pos = "right";
+            on-scroll = 1;
+            format = {
+              months = "<span color='#ffead3'><b>{}</b></span>";
+              days = "<span color='#ecc6d9'><b>{}</b></span>";
+              weeks = "<span color='#99ffdd'><b>W{}</b></span>";
+              weekdays = "<span color='#ffcc66'><b>{}</b></span>";
+              today = "<span color='#ff6699'><b>{}</b></span>";
+            };
+          };
+          actions = {
+            on-click-right = "mode";
+            on-scroll-up = "shift_up";
+            on-scroll-down = "shift_down";
+          };
+        };
+
+        # CPU
         cpu = {
-          interval = 5;
-          format = "  {usage}%";
+          format = " {usage}%";
+          format-icons = ["▁" "▂" "▃" "▄" "▅" "▆" "▇" "█"];
+          tooltip = true;
+          tooltip-format = "min: {min_frequency}";
+          on-click = "foot btop";
         };
 
-        temperature = {
-          hwmon-path = "/sys/class/hwmon/hwmon3/temp4_input";
-          critical-threshold = 80;
-          format = " {temperatureC}󰔄";
-        };
-
+        # Memory
         memory = {
-          interval = 5;
-          format = "  {used} / {percentage}%";
+          format = " {used:0.1f} GiB";
+          tooltip-format = "Mem: {used}/{total} GiB | {percentage}%\nSwap: {swapUsed}/{swapTotal} GiB | {swapPercentage}%";
+          format-icons = ["▁" "▂" "▃" "▄" "▅" "▆" "▇" "█"];
+          on-click = "foot btop";
         };
 
+        # Disk
         disk = {
           interval = 3600;
-          format = "  {used} / {percentage_used}%";
-          path = "/";
+          format = " {used}";
+          tooltip-format = "Available: {free} | {percentage_free}%\nUsed: {used} | {percentage_used}%";
         };
 
-        bluetooth = {
-          format = " {status} ";
-          format-disabled = "  󰂲  ";
-          format-on = "    ";
-          format-connected = "    ";
-          tooltip-format = "{controller_alias}\t{controller_address}\n\n{num_connections} connected";
-          tooltip-format-connected = "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}";
-          tooltip-format-enumerate-connected = "{device_alias}\t{device_address}";
-          tooltip-format-enumerate-connected-battery = "{device_alias}\t{device_address}\t{device_battery_percentage}%";
-          on-click = "blueberry";
-        };
-
-        "custom/monitor-toggle" = {
-          format = " 󰍺  ";
-          tooltip = true;
-          tooltip-format = "Left click: turn on | Right click: turn off";
-          on-click = "${pkgs.wlr-randr}/bin/wlr-randr --output HDMI-A-2 --on --pos 5120,0";
-          on-click-right = "${pkgs.wlr-randr}/bin/wlr-randr --output HDMI-A-2 --off";
-        };
-
-        mpris = {
-          format = "{player_icon} - {dynamic}";
-          format-paused = "{status_icon} <i>{dynamic}</i>";
-          player-icons = {
-            default = "▶";
-            mpv = "🎵";
-            spotify = "󰓇 ";
-          };
-          status-icons = {
-            paused = "⏸ ";
-          };
-          max-length = 70;
-        };
-
-        "group/dwl-window" = {
-          orientation = "inherit";
-          modules = [
-            "dwl/window"
-          ];
-        };
-
-        "custom/taskbar-icon" = {
-          format = "  󰨇  ";
-        };
-
-        "wlr/taskbar" = {
-          format = "{icon}";
-          all-outputs = false;
-          tooltip-format = "{title}";
-          markup = true;
-          on-click = "activate";
-          on-click-right = "close";
-          ignore-list = [ "Rofi" "wofi" ];
-          active-first = true;
-        };
-	
-	      "group/tray" = {
-	        orientation = "inherit";
-	        drawer = {
-	          transition-duration = 300;
-	        };
-	        modules = [
-	          "custom/tray-icon"
-	          "tray"
-	        ];
-	      };
-
-	      "custom/tray-icon" = {
-	        format = "    ";
-	      };
-
-        tray = {
-          format = "{icon}";
+        # Temperature (host-aware)
+        temperature = {
           interval = 5;
-          icon-size = 12;
-          spacing = 5;
+          critical-threshold = 80;
+          format = "  {temperatureC}°C";
+          format-icons = ["" "" ""];
+        } // (if isThinkpad then {
+          hwmon-path = "/sys/devices/platform/thinkpad_hwmon/hwmon/hwmon2/temp1_input";
+          input-filename = "temp1_input";
+        } else {});
+
+        # Backlight
+        backlight = {
+          format = "{percent}% {icon}";
+          format-icons = ["" "" "" "" "" "" "" "" ""];
         };
 
-        "group/network" = {
-          orientation = "inherit";
-          drawer = {
-            transition-duration = 300;
+        # Battery (thinkpad only, conditionally added to modules-right)
+        battery = {
+          states = {
+            good = 95;
+            warning = 30;
+            critical = 15;
           };
-          modules = [
-            "custom/network-icon"
-            "network"
-          ];
+          format = "{icon} {capacity}%";
+          format-charging = "{icon} {capacity}% 󱊦";
+          format-plugged = "{icon} {capacity}% ";
+          tooltip = true;
+          tooltip-format = "{timeTo}\nHealth: {health}%\nUsage: {power:0.1f}W\nCycles: {cycles}";
+          format-alt = "{icon} {time}";
+          format-icons = ["󰂎" "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹"];
         };
 
-        "custom/network-icon" = {
-          format = "    ";
-        };
-
-        network = {
-          interval = 2;
+        # Power profiles
+        power-profiles-daemon = {
           format = "{icon}";
-          format-wifi = "{essid} ({signalStrength}%)";
-          format-ethernet = "  {bandwidthDownBytes} |   {bandwidthUpBytes}";
-          format-linked = " No IP ({ifname})";
-          format-disconnected = " Disconnected";
-          tooltip-format = "{ifname} {ipaddr}/{cidr} via {gwaddr}";
-        };
-
-        clock = {
-          format = "{:%a %d | 󰥔  %I:%M %p}";
-          format-alt = "{:%A, %B %d, %Y - %I:%M %p}";
+          tooltip-format = "Power profile: {profile}\nDriver: {driver}";
           tooltip = true;
-          tooltip-format = "{:%A, %B %d %Y}";
-          on-click = "if pgrep -x yad; then pkill -x yad; else yad --calendar --undecorated --no-buttons --close-on-unfocus; fi";
-        };
-
-        pulseaudio = {
-          format = "{icon}  {volume}%";
-          tooltip = false;
-          format-muted = " ";
-          on-click = "kitty --title=Wiremix wiremix";
-          on-click-right = "pamixer -t";
-          on-scroll-up = "pamixer -i 2";
-          on-scroll-down = "pamixer -d 2";
-          scroll-step = 5;
           format-icons = {
-            default = [ "󰕿" "󰖀" "󰕾" ];
+            default = "";
+            performance = "";
+            balanced = "";
+            power-saver = "";
           };
         };
 
-        "pulseaudio/slider" = {
-          "min" = 0;
-          "max" = 100;
-          "oritentation" = "horizontal";
-        }; 
+        # Network
+        network = {
+          format-wifi = "{icon} {signalStrength}%";
+          format-ethernet = "{icon} | {bandwidthTotalBytes}";
+          format-disconnected = " 󰤮 ";
+          format-alt = "{icon} |  {bandwidthUpBytes} |  {bandwidthDownBytes}";
+          format-icons = {
+            wifi = ["󰤯" "󰤟" "󰤢" "󰤥" "󰤨"];
+            ethernet = ["󰈀"];
+          };
+          tooltip-format = "{ifname} via {gwaddr} 󰊗";
+          tooltip-format-wifi = "{icon} {essid} ({signalStrength}%)\nIP: {ipaddr}\nDown:  {bandwidthDownBytes}\nUp:  {bandwidthUpBytes}";
+          tooltip-format-ethernet = "IP: {ipaddr}\nDown:  {bandwidthDownBytes}\nUp:  {bandwidthUpBytes}";
+          tooltip-format-disconnected = "󰤮 Disconnected";
+        };
 
+        # Pulseaudio
+        pulseaudio = {
+          format = "{icon} {volume}%";
+          format-bluetooth = "{volume}% {icon} {format_source}";
+          format-bluetooth-muted = " {icon} {format_source}";
+          format-muted = "󰝟 {format_source}";
+          format-source = "{volume}% ";
+          format-source-muted = "";
+          format-icons = {
+            headphone = "";
+            hands-free = "";
+            headset = "";
+            phone = "";
+            portable = "";
+            car = "";
+            default = ["" "" ""];
+          };
+          on-click = "foot wiremix";
+        };
+
+        # Power button
         "custom/power" = {
-          format = "  ⏻  ";
+          format = " ⏻ ";
           tooltip = false;
-          on-click = "/home/jtekk/.local/bin/wofi-power-menu";
-        };
-
-        "custom/weather" = {
-	        format = "{text}";
-          exec = "status-weather";
-          return-type = "json";
-          interval = 1800;  # Update every 30 minutes
-          tooltip = true;
-          on-click = "xdg-open 'https://wttr.in/brighton_co'";
-        };
-
-        "pulseaudio#microphone" = {
-          format = "{format_source}";
-          format-source = " {volume}%";
-          tooltip = false;
-          format-source-muted = " Muted";
-          on-click = "pamixer --default-source -t";
-          on-scroll-up = "pamixer --default-source -i 2";
-          on-scroll-down = "pamixer --default-source -d 2";
-          scroll-step = 5;
+          on-click = "wlogout -l ~/.config/wlogout/layout -s ~/.config/wlogout/style.css";
         };
       };
     };
 
-    style = let
-      colors = config.theme.colors;
-      primaryColor = if config.theme.name == "neuro-fusion" && colors.mangoOverrides != null
-                     then colors.mangoOverrides.focuscolor
-                     else colors.accent_primary;
-      urgentColor = if config.theme.name == "neuro-fusion" && colors.mangoOverrides != null
-                    then colors.mangoOverrides.urgentcolor
-                    else colors.accent_secondary;
-    in ''
+    style = ''
       * {
-        font-family: "Noto Sans", "Font Awesome 7 Free";
-        font-weight: 600;
-        font-size: 14px;
-        min-height: 0;
-        border-radius: 0px;
+        /* `otf-font-awesome` is required to be installed for icons */
+        font-family: CaskaydiaCove Nerd Font Propo, FontAwesome, Roboto, Helvetica, Arial, sans-serif;
+        font-size: 11px;
       }
 
       window#waybar {
-        background-color: rgba(15,15,15, 0.6);
-        padding: 0px;
+        background-color: ${colors.rgba.bg_primary 1.0};
+        border-bottom: 2px solid ${primaryColor};
       }
 
-      tooltip {
-        background: rgba(44, 44, 44, 0.95);
-        border-radius: 8px;
-        border-width: 1px;
-        border-style: solid;
-        border-color: rgba(255, 255, 255, 0.1);
-        color: #ffffff;
+      #pulseaudio:hover {
+        background-color: ${primaryColor};
       }
 
-      #group-tray,
-      #group-network,
-      #group-system {
-        background-color: transparent;
-        border: none;
-        margin: 0px;
-        padding: 0px;
-      }
-
-      #mpris,
-      #network,
-      #bluetooth,
-      #disk,
-      #memory,
-      #cpu,
-      #temperature,
-      #taskbar,
-      #clock,
-      #pulseaudio,
-      #pulseaudio-slider,
-      #custom-power,
-      #custom-weather,
-      #custom-monitor-toggle,
-      #custom-system-icon,
-      #custom-taskbar-icon,
-      #custom-tray-icon,
-      #custom-network-icon,
-      #window,
-      #workspaces {
-        background-color: ${colors.rgba.accent_primary 0.95};
-        border: 2px solid black;
-        border-radius: 12px;
-        margin-left: 0px;
-        margin-right: 0px;
-        padding-left: 8px;
-        padding-right: 8px;
-      }
-
+      #workspaces,
       #workspaces button {
-        transition: all 0.2s ease;
+        background: transparent;
+        border: 0;
+        border-radius: 20px;
+        opacity: 1.0;
+        padding: 0 2px;
+        box-shadow: none;
+        border: none;
+        outline: none;
+        text-shadow: none;
+        animation: none;
+        color: ${colors.fg_dim};
       }
 
       #workspaces button.hidden {
-        color: ${colors.rgba.bg_primary 0.4};
+        opacity: 0.2;
       }
 
       #workspaces button.active {
-        color: white;
-        border-bottom: 2px solid white;
-      }
-
-      #workspaces button.visible {
-        color: black;
-      }
-
-      #custom-power:hover,
-      #custom-weather:hover,
-      #custom-monitor-toggle:hover,
-      #bluetooth:hover,
-      #pulseaudio:hover,
-      #window:hover,
-      #workspaces button:hover {
-        background-color: ${colors.rgba.bg_primary 0.65};
-        color: #ffffff;
+        transition: ease-in 300ms;
+        opacity: 1.0;
+        color: ${primaryColor};
       }
 
       #workspaces button.urgent {
         background-color: ${urgentColor};
+      }
+
+      #window,
+      #clock,
+      #battery,
+      #cpu,
+      #memory,
+      #disk,
+      #temperature,
+      #backlight,
+      #network,
+      #pulseaudio,
+      #wireplumber,
+      #custom-power,
+      #custom-media,
+      #tray,
+      #mode,
+      #idle_inhibitor,
+      #scratchpad,
+      #power-profiles-daemon,
+      #keyboard-state,
+      #mpd {
+        padding: 0 10px;
+        color: ${primaryColor};
+        border-right: 1px solid rgba(255,255,255,0.2);
+      }
+
+      #clock {
+        border-right: none;
+      }
+
+      #idle_inhibitor {
+        border-left: 1px solid rgba(255,255,255,0.2);
+      }
+
+      #battery.charging {
         color: #ffffff;
-        animation: urgent-blink 1s infinite;
-      }
-
-      #mpris {
-        margin-left: 400px;
-      }
-
-      #taskbar button.urgent {
-        background-color: ${urgentColor};
-        animation: urgent-blink 1s infinite;
-      }
-
-      #taskbar button.active {
-        background-color: ${colors.rgba.accent_primary 0.95};
-      }
-
-      #pulseaudio-slider slider {
-        min-height: 0px;
-        min-width: 0px;
-        opacity: 0;
-        background-image: none;
-        border: none;
-        box-shadow: none;
-      }
-
-      #pulseaudio-slider trough {
-        min-height: 10px;
-        min-width: 80px;
-        border-radius: 5px;
-        background: black;
-      }
-
-      #pulseaudio-slider highlight {
-        min-width: 10px;
-        border-radius: 5px;
-        background: white;
+        background-color: ${primaryColor};
       }
     '';
   };
 
+  # Mango menu XML for layout switching
   xdg.configFile."waybar/mango-menu.xml".text = ''
     <?xml version="1.0" encoding="UTF-8"?>
     <interface>
-        <object class="GtkMenu" id="menu">
-            <child>
-                <object class="GtkMenuItem" id="tiling">
-                    <property name="label">  Tiling</property>
-                </object>
-            </child>
-            <child>
-                <object class="GtkMenuItem" id="centerTiling">
-                    <property name="label">  Center Tiling</property>
-                </object>
-            </child>
-            <child>
-                <object class="GtkMenuItem" id="rightTiling">
-                    <property name="label">  Right Tiling</property>
-                </object>
-            </child>
-            <child>
-                <object class="GtkMenuItem" id="verticalTiling">
-                    <property name="label">  Vertical Tiling</property>
-                </object>
-            </child>
-            <child>
-                <object class="GtkSeparatorMenuItem" id="delimiter1" />
-            </child>
-            <child>
-                <object class="GtkMenuItem" id="scrolling">
-                    <property name="label">󰹳  Scrolling</property>
-                </object>
-            </child>
-            <child>
-                <object class="GtkMenuItem" id="verticalScrolling">
-                    <property name="label">󰹹  Vertical Scrolling</property>
-                </object>
-            </child>
-            <child>
-                <object class="GtkSeparatorMenuItem" id="delimiter2" />
-            </child>
-            <child>
-                <object class="GtkMenuItem" id="vrid">
-                    <property name="label">󰋁  Grid</property>
-                </object>
-            </child>
-            <child>
-                <object class="GtkMenuItem" id="verticalGrid">
-                    <property name="label">󰝘  Vertical Grid</property>
-                </object>
-            </child>
-            <child>
-                <object class="GtkSeparatorMenuItem" id="delimiter3" />
-            </child>
-            <child>
-                <object class="GtkMenuItem" id="deck">
-                    <property name="label">  Deck</property>
-                </object>
-            </child>
-            <child>
-                <object class="GtkMenuItem" id="verticalDeck">
-                    <property name="label">  Vertical Deck</property>
-                </object>
-            </child>
-            <child>
-                <object class="GtkSeparatorMenuItem" id="delimiter4" />
-            </child>
-            <child>
-                <object class="GtkMenuItem" id="monocle">
-                    <property name="label">󰹑  Monocle</property>
-                </object>
-            </child>
-        </object>
+      <object class="GtkMenu" id="menu">
+        <child>
+          <object class="GtkMenuItem" id="tiling">
+            <property name="label"> Tiling</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkMenuItem" id="tgmix">
+            <property name="label">󰨇 TG Mix</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkMenuItem" id="centerTiling">
+            <property name="label"> Center Tiling</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkMenuItem" id="rightTiling">
+            <property name="label"> Right Tiling</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkMenuItem" id="verticalTiling">
+            <property name="label">󱂩 Vertical Tiling</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSeparatorMenuItem" id="delimiter1" />
+        </child>
+        <child>
+          <object class="GtkMenuItem" id="scrolling">
+            <property name="label"> Scrolling</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkMenuItem" id="verticalScrolling">
+            <property name="label">󰽿 Vertical Scrolling</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSeparatorMenuItem" id="delimiter2" />
+        </child>
+        <child>
+          <object class="GtkMenuItem" id="grid">
+            <property name="label">󰋁 Grid</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkMenuItem" id="verticalGrid">
+            <property name="label">󰋁 Vertical Grid</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSeparatorMenuItem" id="delimiter3" />
+        </child>
+        <child>
+          <object class="GtkMenuItem" id="deck">
+            <property name="label"> Deck</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkMenuItem" id="verticalDeck">
+            <property name="label"> Vertical Deck</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkSeparatorMenuItem" id="delimiter4" />
+        </child>
+        <child>
+          <object class="GtkMenuItem" id="monocle">
+            <property name="label">󰍹 Monocle</property>
+          </object>
+        </child>
+      </object>
     </interface>
   '';
 }
