@@ -58,26 +58,30 @@ in {
 
     # Animation Configuration
     animations=1
-    layer_animations=1
+    layer_animations=0
     animation_type_open=slide
-    animation_type_close=slide
+    animation_type_close=zoom
     layer_animation_type_open=slide
-    layer_animation_type_close=slide
+    layer_animation_type_close=zoom
     animation_fade_in=1
     animation_fade_out=1
     tag_animation_direction=1
-    zoom_initial_ratio=0.3
-    zoom_end_ratio=0.7
+    zoom_initial_ratio=0.1
+    zoom_end_ratio=0.1
     fadein_begin_opacity=0.1
-    fadeout_begin_opacity=0.5
-    animation_duration_move=150
-    animation_duration_open=150
-    animation_duration_tag=150
-    animation_duration_close=150
-    animation_curve_open=1.0,-0.55,0.04,1.1
-    animation_curve_move=1.0,-0.55,0.04,1.1
-    animation_curve_tag=1.0,-0.55,0.04,1.1
-    animation_curve_close=1.0,-0.55,0.04,1.1
+    fadeout_begin_opacity=1.0
+    animation_duration_move=500
+    animation_duration_open=400
+    animation_duration_tag=250
+    animation_duration_close=400
+    animation_duration_focus=150
+    animation_curve_open=1.0,0,0.04,1.1
+    animation_curve_move=1.0,0,0.04,1.1
+    animation_curve_tag=1.0,0,0.04,1.1
+    animation_curve_close=1.0,0,0.04,1.1
+    animation_curve_focus=1.0,0.0,0.04,1.0
+    animation_curve_opafadein=1.0,0.0,0.04,1.0
+    animation_curve_opafadeout=1.0,0.0,0.04,1.0
 
     # Scroller Layout Setting
     scroller_structs=10
@@ -105,6 +109,10 @@ in {
     # Misc
     xwayland_persistence=1
     syncobj_enable=1
+    adaptive_sync=1
+    allow_shortcuts_inhibit=1
+    allow_tearing=1
+    allow_lock_transparent=0
     no_border_when_single=0
     axis_bind_apply_timeout=100
     focus_on_activate=1
@@ -112,6 +120,8 @@ in {
     sloppyfocus=1
     warpcursor=1
     focus_cross_monitor=0
+    exchange_cross_monitor=0
+    scratchpad_cross_monitor=0
     focus_cross_tag=0
     enable_floating_snap=1
     snap_distance=50
@@ -121,6 +131,7 @@ in {
     drag_tile_to_tile=1
     single_scratchpad=1
     view_current_to_back=0
+    circle_layout=tile,center_tile,tgmix,scroller,grid
 
     # Keyboard
     repeat_rate=50
@@ -141,6 +152,10 @@ in {
     swipe_min_threshold=1
     accel_profile=2
     accel_speed=0.0
+    scroll_method=1
+    click_method=1
+    send_events_mode=0
+    button_map=0
 
     # Appearance (gaps and borders)
     gappih=20

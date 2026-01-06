@@ -14,6 +14,20 @@
     windowrule=unfocused_opacity:0.85,focused_opacity:0.95,appid:foot
     windowrule=unfocused_opacity:0.85,focused_opacity:0.95,appid:ghostty
     windowrule=unfocused_opacity:1.0,focused_opacity:1.0,appid:Google-chrome
+
+    # Layer rules
+    layerrule=layer_name:wofi,animation_type_open:zoom,animation_type_close:zoom
+
+    # Tag rules (per-tag default layouts)
+    tagrule=id:1,layout_name:tile
+    tagrule=id:2,layout_name:center_tile
+    tagrule=id:3,layout_name:scroller
+    tagrule=id:4,layout_name:grid
+    tagrule=id:5,layout_name:tgmix
+    tagrule=id:6,layout_name:tgmix
+    tagrule=id:7,layout_name:tgmix
+    tagrule=id:8,layout_name:tgmix
+    tagrule=id:9,layout_name:tgmix
   '';
 }
 

@@ -23,8 +23,12 @@
     bind=SUPER,backspace,spawn,swaync-client -t
     bind=SUPER+SHIFT,backspace,spawn,swaync-client -C
 
-    # Waybar toggle
-    bind=SUPER+SHIFT,b,spawn,killall -SIGUSR1 waybar
+    # Dim lights (night light toggle)
+    bind=SUPER+CTRL,l,spawn,toggle-sunset
+
+    # Waybar toggle and reload
+    bind=SUPER+SHIFT,b,spawn,toggle-waybar
+    bind=SUPER+ALT,b,spawn,pkill -SIGUSR2 waybar
 
     # Power menu
     bind=SUPER,Escape,spawn,wlogout -sC ~/.config/mango/wlogout/style.css -l ~/.config/mango/wlogout/layout

@@ -8,6 +8,7 @@
 
     # Layouts
     bind=SUPER+CTRL,t,setlayout,tile
+    bind=SUPER+CTRL,x,setlayout,tgmix
     bind=SUPER+CTRL,s,setlayout,scroller
     bind=SUPER+CTRL,m,setlayout,monocle
     bind=SUPER+CTRL,g,setlayout,grid
