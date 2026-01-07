@@ -28,8 +28,11 @@ in {
     wget
 
     # TUI Apps
+    dialog
     dust
     dysk
+    gdu
+    spotify-tui
     superfile
 
     # Dev Tools
