@@ -41,7 +41,7 @@
 
   environment.systemPackages = with pkgs; [
     wiremix
-    blueberry
+    bluetui      # TUI for managing bluetooth
     blanket      # Ambient sound / white noise app
     iwd
     impala

@@ -1,7 +1,15 @@
-{ pkgs, config, ... }:
+{ pkgs, config, osConfig ? null, ... }:
 
 let
   colors = config.theme.colors;
+
+  # Host detection for conditional settings
+  hostname = if osConfig != null then
+    osConfig.networking.hostName
+  else
+    builtins.replaceStrings [ "\n" ] [ "" ] (builtins.readFile /etc/hostname);
+  isThinkpad = hostname == "thinkpad";
+  isDeepspace = hostname == "deepspace";
   # Use mango format (0xRRGGBBaa) for colors
   useOverrides = config.theme.name == "neuro-fusion" && colors.mangoOverrides
     != null;
@@ -49,7 +57,7 @@ in {
     shadows_blur=15
     shadows_position_x=0
     shadows_position_y=0
-    shadowscolor=0x000000ff
+    shadowscolor=0xbd93f9
 
     border_radius=4
     no_radius_when_single=0
@@ -139,8 +147,8 @@ in {
     numlockon=1
     xkb_rules_layout=us
 
-    # Trackpad
-    disable_trackpad=1
+    # Trackpad - only enable on thinkpad (laptop)
+    disable_trackpad=${if isThinkpad then "0" else "1"}
     tap_to_click=1
     tap_and_drag=1
     drag_lock=1
@@ -149,7 +157,7 @@ in {
     disable_while_typing=1
     left_handed=0
     middle_button_emulation=0
-    swipe_min_threshold=1
+    swipe_min_threshold=20
     accel_profile=2
     accel_speed=0.0
     scroll_method=1

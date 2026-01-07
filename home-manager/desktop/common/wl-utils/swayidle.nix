@@ -19,7 +19,7 @@ in {
 
       events = [
         { event = "before-sleep"; command = "${loginctl} lock-session"; }
-        { event = "after-resume"; command = "${dpmsOn}"; }
+        { event = "after-resume"; command = "${dpmsOn} && ${brightnessctl} -r"; }
         { event = "lock"; command = "${swaylock} -f"; }
       ];
 
@@ -30,11 +30,17 @@ in {
           command = "${loginctl} lock-session";
         }
 
-        # Turn off display 30 seconds after lock
+        # Turn off display after 10 minutes
         {
-          timeout = 330;
+          timeout = 600;
           command = dpmsOff;
           resumeCommand = "${dpmsOn} && ${brightnessctl} -r";
+        }
+
+        # Suspend after 2 hours
+        {
+          timeout = 7200;
+          command = "${loginctl} suspend";
         }
       ];
     };

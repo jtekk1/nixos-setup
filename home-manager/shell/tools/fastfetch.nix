@@ -213,11 +213,11 @@ in {
       }
       "break"
       {
-        type = "wm";
+        type = "command";
         key = " 󰧨 WM ";
         keyIcon = "";
         keyColor = colors.accent_primary;
-        format = "{1} - {2} - {3} - {4} - {5} - {6} - {7} - {8} - {9}";
+        text = "mango -v 2>/dev/null || echo 'Mango WC'";
       }
       {
         type = "de";

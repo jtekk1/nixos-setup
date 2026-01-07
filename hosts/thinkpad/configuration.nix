@@ -2,7 +2,6 @@
 
 let
   networkConfig = import ../../network-config.nix;
-  hostCfg = networkConfig.hosts.deepspace;
 in {
   imports = [
     ./hardware-configuration.nix
@@ -14,17 +13,17 @@ in {
 
   networking.hostName = "thinkpad";
 
-  # Static IP configuration
-  networking.networkmanager.enable = true;
+  # Use iwd for wifi (required for impala TUI)
+  # NetworkManager conflicts with iwd standalone mode
+  networking.networkmanager.enable = lib.mkForce false;
   networking.useDHCP = lib.mkForce true;
   networking.dhcpcd.enable = true;
 
-  networking.defaultGateway = networkConfig.gateway;
   networking.nameservers = networkConfig.nameservers;
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
   services.blueman.enable =
-    false; # Using blueberry instead (configured in system/core/audio-n-wifi.nix)
+    false; # Using bluetui instead (configured in system/core/audio-n-wifi.nix)
 
   # Explicitly exclude blueman package and disable its autostart
   environment.etc."xdg/autostart/blueman.desktop".text = "";

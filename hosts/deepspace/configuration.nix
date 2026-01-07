@@ -33,7 +33,7 @@ in {
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
   services.blueman.enable =
-    false; # Using blueberry instead (configured in system/core/audio-n-wifi.nix)
+    false; # Using bluetui instead (configured in system/core/audio-n-wifi.nix)
 
   # Explicitly exclude blueman package and disable its autostart
   environment.etc."xdg/autostart/blueman.desktop".text = "";

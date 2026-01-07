@@ -322,7 +322,7 @@ in {
         tooltip-format-enumerate-connected = "{device_alias}	{device_address}";
         tooltip-format-enumerate-connected-battery =
           "{device_alias}	{device_address}	{device_battery_percentage}%";
-        on-click = "blueberry";
+        on-click = "foot bluetui";
       };
 
       # Weather (custom script)
