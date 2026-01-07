@@ -25,7 +25,7 @@ let
     thinkpad = {
       pc = "Thinkpad T480s";
       chassis = "Notebook";
-    }
+    };
   };
 
   currentHost = hostInfo.${hostname} or {
@@ -217,6 +217,7 @@ in {
         key = " 󰧨 WM ";
         keyIcon = "";
         keyColor = colors.accent_primary;
+        format = "{1} - {2} - {3} - {4} - {5} - {6} - {7} - {8} - {9}";
       }
       {
         type = "de";

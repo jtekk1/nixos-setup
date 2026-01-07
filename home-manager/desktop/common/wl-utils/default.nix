@@ -17,6 +17,7 @@
   ];
 
   home.packages = with pkgs; [
+    brightnessctl
     wayland-utils
     wev
   ];
