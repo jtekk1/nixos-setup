@@ -78,10 +78,10 @@ in {
     zoom_end_ratio=0.1
     fadein_begin_opacity=0.1
     fadeout_begin_opacity=1.0
-    animation_duration_move=500
-    animation_duration_open=400
+    animation_duration_move=300
+    animation_duration_open=300
     animation_duration_tag=250
-    animation_duration_close=400
+    animation_duration_close=300
     animation_duration_focus=150
     animation_curve_open=1.0,0,0.04,1.1
     animation_curve_move=1.0,0,0.04,1.1

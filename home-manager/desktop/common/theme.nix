@@ -17,19 +17,24 @@ in
     customIcons
   ];
 
-  # Symlink custom cursor themes to icons directory
-  home.file.".local/share/icons".source =
-    config.lib.file.mkOutOfStoreSymlink
-    "${nixSetupsPath}/home-manager/assets/mouse-icons";
-
-  # Cursor configuration
-  home.pointerCursor = {
-    name = "oreo_spark_pink_cursors";
-    package = null;  # Using custom cursors from symlinked directory
-    size = 24;
-    gtk.enable = true;
-    x11.enable = true;
+  # Symlink custom cursor themes to icons directory (each theme individually)
+  home.file = {
+    ".local/share/icons/oreo_spark_pink_cursors".source =
+      config.lib.file.mkOutOfStoreSymlink
+      "${nixSetupsPath}/home-manager/assets/mouse-icons/oreo_spark_pink_cursors";
+    ".local/share/icons/oreo_spark_purple_cursors".source =
+      config.lib.file.mkOutOfStoreSymlink
+      "${nixSetupsPath}/home-manager/assets/mouse-icons/oreo_spark_purple_cursors";
+    ".local/share/icons/oreo_spark_blue_cursors".source =
+      config.lib.file.mkOutOfStoreSymlink
+      "${nixSetupsPath}/home-manager/assets/mouse-icons/oreo_spark_blue_cursors";
+    ".local/share/icons/oreo_void_green_cursors".source =
+      config.lib.file.mkOutOfStoreSymlink
+      "${nixSetupsPath}/home-manager/assets/mouse-icons/oreo_void_green_cursors";
   };
+
+  # Cursor configuration handled via symlinked directory and session variables
+  # home.pointerCursor not used - custom cursors from ~/.local/share/icons
 
   # Session variables (minimal, compositor-agnostic)
   home.sessionVariables = {
@@ -50,7 +55,6 @@ in
 
     cursorTheme = {
       name = "oreo_spark_pink_cursors";
-      package = null;  # Using custom cursors from symlinked directory
       size = 24;
     };
 
