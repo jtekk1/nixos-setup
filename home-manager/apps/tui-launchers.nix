@@ -2,18 +2,9 @@
 
 # Desktop launchers for TUI applications
 # These show up in wofi/app launchers
+# Note: btop already has its own .desktop file from the package
 {
   home.packages = [
-    (pkgs.makeDesktopItem {
-      name = "btop";
-      desktopName = "Btop";
-      comment = "System Monitor";
-      icon = "utilities-system-monitor";
-      exec = "foot -T BTOP btop";
-      categories = [ "System" "Monitor" ];
-      terminal = false;
-    })
-
     (pkgs.makeDesktopItem {
       name = "gdu";
       desktopName = "GDU";
