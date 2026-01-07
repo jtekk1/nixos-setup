@@ -1,7 +1,10 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   programs.bash.initExtra = ''
+    # Initialize ble.sh (Bash Line Editor) - must be first
+    source ${pkgs.blesh}/share/blesh/ble.sh
+
     set +h
 
     # Ensure FIDO2 SSH keys work properly

@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   imports = [
@@ -8,6 +8,8 @@
     ./readline.nix
     ./variables.nix
   ];
+
+  home.packages = [ pkgs.blesh ];
 
   programs.bash = {
     enable = true;

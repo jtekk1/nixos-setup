@@ -32,7 +32,6 @@ in {
     dust
     dysk
     gdu
-    spotify-tui
     superfile
 
     # Dev Tools

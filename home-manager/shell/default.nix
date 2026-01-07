@@ -9,6 +9,7 @@ in
   imports =
     [
       ./bash
+      ./homebrew.nix
       ./ssh.nix
       ./tools
       ./extras
