@@ -5,10 +5,10 @@ let
   pl = config.programs.waybar.powerline;
 
   # Host detection for conditional styling
-  hostname =
-    if osConfig != null
-    then osConfig.networking.hostName
-    else builtins.replaceStrings ["\n"] [""] (builtins.readFile /etc/hostname);
+  hostname = if osConfig != null then
+    osConfig.networking.hostName
+  else
+    builtins.replaceStrings [ "\n" ] [ "" ] (builtins.readFile /etc/hostname);
   isDeepspace = hostname == "deepspace";
   isThinkpad = hostname == "thinkpad";
 
@@ -17,20 +17,39 @@ let
   rightCapColor = colors.accent_primary;
 
   # Theme colors with fallbacks
-  primaryColor = if config.theme.name == "neuro-fusion" && colors.mangoOverrides != null
-                 then colors.mangoOverrides.focuscolor
-                 else colors.accent_primary;
-  urgentColor = if config.theme.name == "neuro-fusion" && colors.mangoOverrides != null
-                then colors.mangoOverrides.urgentcolor
-                else colors.accent_secondary;
+  primaryColor =
+    if config.theme.name == "neuro-fusion" && colors.mangoOverrides != null then
+      colors.mangoOverrides.focuscolor
+    else
+      colors.accent_primary;
+  urgentColor =
+    if config.theme.name == "neuro-fusion" && colors.mangoOverrides != null then
+      colors.mangoOverrides.urgentcolor
+    else
+      colors.accent_secondary;
 
   # Separator characters
   separatorChars = {
-    half-circle = { right = ""; left = ""; };
-    triangle = { right = ""; left = ""; };
-    inverted-triangle = { right = ""; left = ""; };
-    bot-triangle = { right = ""; left = ""; };
-    top-triangle = { right = ""; left = ""; };
+    half-circle = {
+      right = "";
+      left = "";
+    };
+    triangle = {
+      right = "";
+      left = "";
+    };
+    inverted-triangle = {
+      right = "";
+      left = "";
+    };
+    bot-triangle = {
+      right = "";
+      left = "";
+    };
+    top-triangle = {
+      right = "";
+      left = "";
+    };
   };
 
   # Get separator characters based on config
@@ -44,17 +63,14 @@ let
   capLeft = if pl.caps.inverted then capStyle.right else capStyle.left;
 
   # Color cycling for modules (primary -> secondary -> tertiary)
-  accentColors = [
-    colors.accent_primary
-    colors.accent_secondary
-    colors.accent_tertiary
-  ];
+  accentColors =
+    [ colors.accent_primary colors.accent_secondary colors.accent_tertiary ];
 
   # Base style (non-powerline)
   baseStyle = ''
     * {
       font-family: CaskaydiaCove Nerd Font Propo, FontAwesome, Roboto, Helvetica, Arial, sans-serif;
-      font-size: 11px;
+      font-size: 12px;
     }
 
     window#waybar {
@@ -143,7 +159,7 @@ let
     }
 
     window#waybar {
-      background-color: ${colors.rgba.bg_primary 0.15};
+      background-color: ${colors.rgba.bg_primary 0.65};
       border: none;
     }
 
@@ -153,9 +169,12 @@ let
       padding: ${pl.segment.padding};
       margin: ${pl.segment.margin};
       font-weight: ${toString pl.segment.fontWeight};
-      ${if pl.transitions.enable then ''
-      transition: all ${pl.transitions.duration} ${pl.transitions.timing};
-      '' else ""}
+      ${
+        if pl.transitions.enable then ''
+          transition: all ${pl.transitions.duration} ${pl.transitions.timing};
+        '' else
+          ""
+      }
     }
 
     /* === LEFT MODULES (powerline going right →) === */
@@ -328,6 +347,7 @@ let
       margin: 0 2px;
       border-radius: 0;
       box-shadow: none;
+      transition: all ${pl.transitions.duration} ${pl.transitions.timing};
     }
 
     #workspaces button:hover {
@@ -400,13 +420,17 @@ let
 
     /* Pulseaudio - color 1 on deepspace, color 2 on thinkpad */
     #pulseaudio {
-      background-color: ${if isDeepspace then colors.accent_primary else colors.accent_secondary};
+      background-color: ${
+        if isDeepspace then colors.accent_primary else colors.accent_secondary
+      };
       color: ${if isDeepspace then colors.bg_primary else colors.bg_secondary};
     }
 
     /* Weather - color 3 on deepspace, color 1 on thinkpad */
     #custom-weather {
-      background-color: ${if isDeepspace then colors.accent_tertiary else colors.accent_primary};
+      background-color: ${
+        if isDeepspace then colors.accent_tertiary else colors.accent_primary
+      };
       color: ${if isDeepspace then colors.bg_tertiary else colors.bg_primary};
     }
 

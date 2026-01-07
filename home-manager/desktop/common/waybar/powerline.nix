@@ -97,7 +97,7 @@ in {
       };
       fontWeight = lib.mkOption {
         type = lib.types.int;
-        default = 600;
+        default = 900;
         description = "Font weight for segment text";
       };
     };

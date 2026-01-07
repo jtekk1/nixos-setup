@@ -1,7 +1,7 @@
 { config, lib, ... }:
 
 let
-  nixSetupsPath = "${config.home.homeDirectory}/NixSetups";
+  nixSetupsPath = "${config.home.homeDirectory}/NixSetup";
   colors = config.theme.colors;
   themeSettings = import ../../../desktop-theme-settings.nix;
   wlogoutTheme = themeSettings.wlogout-theme;

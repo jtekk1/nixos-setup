@@ -282,7 +282,7 @@ in {
         format = " ⏻ ";
         tooltip = false;
         on-click =
-          "wlogout -l ~/.config/wlogout/layout -s ~/.config/wlogout/style.css";
+          "wlogout -l ~/.config/mango/wlogout/layout -s ~/.config/mango/wlogout/style.css";
       };
 
       # Monitor toggle (HDMI-A-2)

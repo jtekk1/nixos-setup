@@ -2,16 +2,36 @@
 
 let
   colors = config.theme.colors;
-  hostname = if osConfig != null then osConfig.networking.hostName else "unknown";
+  hostname =
+    if osConfig != null then osConfig.networking.hostName else "unknown";
 
   hostInfo = {
-    deepspace = { pc = "Custom Built on ThermalTake 600"; chassis = "ThermalTake 600"; };
-    beelink = { pc = "Beelink SER8"; chassis = "{1}"; };
-    tank = { pc = "Minisforum N5 PRO NAS"; chassis = "{1}"; };
-    mini-me = { pc = "Beelink ME Mini"; chassis = "{1}"; };
+    deepspace = {
+      pc = "Custom Built on ThermalTake 600";
+      chassis = "ThermalTake 600";
+    };
+    beelink = {
+      pc = "Beelink SER8";
+      chassis = "{1}";
+    };
+    tank = {
+      pc = "Minisforum N5 PRO NAS";
+      chassis = "{1}";
+    };
+    mini-me = {
+      pc = "Beelink ME Mini";
+      chassis = "{1}";
+    };
+    thinkpad = {
+      pc = "Thinkpad T480s";
+      chassis = "Notebook";
+    }
   };
 
-  currentHost = hostInfo.${hostname} or { pc = "{1}"; chassis = "{1}"; };
+  currentHost = hostInfo.${hostname} or {
+    pc = "{1}";
+    chassis = "{1}";
+  };
 in {
   home.packages = [ pkgs.fastfetch ];
 
@@ -20,7 +40,7 @@ in {
       "https://github.com/fastfetch-cli/fastfetch/raw/master/doc/json_schema.json";
     logo = {
       type = "auto";
-      source = "~/.config/fastfetch/jtekk.txt";
+      source = "";
       color = {
         "1" = colors.accent_primary;
         "2" = colors.accent_secondary;
