@@ -217,7 +217,7 @@ in {
         key = " 󰧨 WM ";
         keyIcon = "";
         keyColor = colors.accent_primary;
-        text = "mango -v 2>&1 || echo 'Mango WC'";
+        text = "mango -v 2>&1";
       }
       {
         type = "de";

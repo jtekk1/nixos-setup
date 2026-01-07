@@ -176,7 +176,7 @@ in {
         format-icons = [ "▁" "▂" "▃" "▄" "▅" "▆" "▇" "█" ];
         tooltip = true;
         tooltip-format = "min: {min_frequency}";
-        on-click = "foot btop";
+        on-click = "foot -T BTOP btop";
       };
 
       # Memory
@@ -186,7 +186,7 @@ in {
           Mem: {used}/{total} GiB | {percentage}%
           Swap: {swapUsed}/{swapTotal} GiB | {swapPercentage}%'';
         format-icons = [ "▁" "▂" "▃" "▄" "▅" "▆" "▇" "█" ];
-        on-click = "foot btop";
+        on-click = "foot -T BTOP btop";
       };
 
       # Disk
@@ -196,6 +196,7 @@ in {
         tooltip-format = ''
           Available: {free} | {percentage_free}%
           Used: {used} | {percentage_used}%'';
+        on-click = "foot -T GDU gdu";
       };
 
       # Temperature (host-aware)
@@ -257,6 +258,7 @@ in {
           Down:  {bandwidthDownBytes}
           Up:  {bandwidthUpBytes}'';
         tooltip-format-disconnected = "󰤮 Disconnected";
+        on-click = "foot -T IMPALA impala";
       };
 
       # Pulseaudio
@@ -276,7 +278,7 @@ in {
           car = "";
           default = [ "" "" "" ];
         };
-        on-click = "foot wiremix";
+        on-click = "foot -T WIREMIX wiremix";
       };
 
       # Power button
@@ -324,7 +326,7 @@ in {
         tooltip-format-enumerate-connected = "{device_alias}	{device_address}";
         tooltip-format-enumerate-connected-battery =
           "{device_alias}	{device_address}	{device_battery_percentage}%";
-        on-click = "foot bluetui";
+        on-click = "foot -T BTUI bluetui";
       };
 
       # Weather (custom script)
