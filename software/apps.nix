@@ -26,6 +26,7 @@
     })
 
     # Image editing
+    conjure # AI image transformation
     gimp
     inkscape
     imagemagick
@@ -34,6 +35,7 @@
     spotify
     obsidian
     typora
+    handbrake # Video transcoder
     shotcut # Video editor
     bitwarden-desktop # Password manager (works with Vaultwarden)
     slack
