@@ -13,7 +13,7 @@ let
       inherit inputs;
       theme = theme;
     };
-    home-manager.users.jtekk = import ./home;
+    home-manager.users.jtekk = import ./home-manager;
   };
 
   # Create a colmena server configuration

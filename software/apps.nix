@@ -73,5 +73,8 @@
     nwg-look # GTK theme settings
     # gemini-cli # AI CLI tool - temporarily disabled due to npm deps hash mismatch
     wl-screenrec # Wayland screen recorder
+
+    # Home-manager CLI for standalone usage
+    inputs.home-manager.packages.${pkgs.system}.home-manager
   ];
 }

@@ -72,7 +72,7 @@
         home-manager.useUserPackages = true;
         home-manager.backupFileExtension = "hm-bak";
         home-manager.extraSpecialArgs = { inherit inputs theme; };
-        home-manager.users.jtekk = import ./home;
+        home-manager.users.jtekk = import ./home-manager;
       };
 
       mkSystem =
@@ -136,7 +136,7 @@
             inherit inputs theme isDesktop;
             osConfig = null;
           };
-          modules = [ ./home ];
+          modules = [ ./home-manager ];
         };
 
     in {

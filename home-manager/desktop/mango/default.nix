@@ -10,8 +10,8 @@
     ./env.nix
     ./looknfeel.nix
     ./monitors.nix
-    ./waybar.nix
     ./windowrules.nix
     ./wlogout.nix
+    ../common/waybar
   ];
 }

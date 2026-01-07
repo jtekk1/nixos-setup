@@ -6,11 +6,26 @@
 let
   # Available separator/tail characters
   separatorChars = {
-    half-circle = { right = ""; left = ""; };
-    triangle = { right = ""; left = ""; };
-    inverted-triangle = { right = ""; left = ""; };
-    bot-triangle = { right = ""; left = ""; };
-    top-triangle = { right = ""; left = ""; };
+    half-circle = {
+      right = "";
+      left = "";
+    };
+    triangle = {
+      right = "";
+      left = "";
+    };
+    inverted-triangle = {
+      right = "";
+      left = "";
+    };
+    bot-triangle = {
+      right = "";
+      left = "";
+    };
+    top-triangle = {
+      right = "";
+      left = "";
+    };
   };
 
 in {
@@ -20,7 +35,13 @@ in {
 
     separators = {
       style = lib.mkOption {
-        type = lib.types.enum [ "half-circle" "triangle" "inverted-triangle" "bot-triangle" "top-triangle" ];
+        type = lib.types.enum [
+          "half-circle"
+          "triangle"
+          "inverted-triangle"
+          "bot-triangle"
+          "top-triangle"
+        ];
         default = "triangle";
         description = "Separator style between modules";
       };
@@ -31,16 +52,35 @@ in {
       };
     };
 
-    tails = {
+    caps = {
       style = lib.mkOption {
-        type = lib.types.enum [ "half-circle" "triangle" "inverted-triangle" "bot-triangle" "top-triangle" ];
+        type = lib.types.enum [
+          "half-circle"
+          "triangle"
+          "inverted-triangle"
+          "bot-triangle"
+          "top-triangle"
+        ];
         default = "inverted-triangle";
-        description = "Tail cap style at end of module groups";
+        description = "Cap style at edges of module groups";
       };
       inverted = lib.mkOption {
         type = lib.types.bool;
         default = true;
-        description = "Invert tail direction";
+        description = "Invert cap direction";
+      };
+    };
+
+    center = {
+      use = lib.mkOption {
+        type = lib.types.enum [ "separators" "tails" ];
+        default = "separators";
+        description = "Use separators or tails for center modules";
+      };
+      inverted = lib.mkOption {
+        type = lib.types.bool;
+        default = true;
+        description = "Flip center separators/tails direction";
       };
     };
 

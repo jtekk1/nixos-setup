@@ -314,7 +314,7 @@ in {
     directories = mkOption {
       type = types.listOf types.str;
       default = [
-        "/home/jtekk/NixSetups/home/assets/backgrounds"
+        "/home/jtekk/NixSetups/home-manager/assets/backgrounds"
         "~/Pictures/backgrounds"
       ];
       description = "Directories to search for wallpapers";

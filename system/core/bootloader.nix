@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 
-let limineWallpaper = ../../home/assets/backgrounds/1.png;
+let limineWallpaper = ../../home-manager/assets/backgrounds/1.png;
 in {
   boot.loader.limine = {
     enable = true;

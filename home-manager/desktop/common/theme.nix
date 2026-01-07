@@ -1,7 +1,7 @@
 { pkgs, config, lib, ... }:
 
 let
-  customIcons = pkgs.callPackage ../../../home/assets/icons { };
+  customIcons = pkgs.callPackage ../../../home-manager/assets/icons { };
   colors = config.theme.colors;
 in
 {
