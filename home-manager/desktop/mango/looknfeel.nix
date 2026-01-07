@@ -45,7 +45,7 @@ in {
     blur_optimized=1
     blur_params_num_passes=3
     blur_params_radius=5
-    blur_params_noise=0.02
+    blur_params_noise=0.09
     blur_params_brightness=0.9
     blur_params_contrast=0.9
     blur_params_saturation=1.2
@@ -53,11 +53,11 @@ in {
     shadows=1
     layer_shadows=1
     shadow_only_floating=0
-    shadows_size=12
+    shadows_size=8
     shadows_blur=15
     shadows_position_x=0
     shadows_position_y=0
-    shadowscolor=0xbd93f9
+    shadowscolor=0xbd93f9ff
 
     border_radius=4
     no_radius_when_single=0
@@ -106,12 +106,14 @@ in {
     default_mfact=0.45
     default_smfact=0.45
     default_nmaster=1
+    center_master_overspread=0
+    center_when_single_stack=0
 
     # Overview Setting
     hotarea_size=10
     enable_hotarea=0
     ov_tab_mode=1
-    overviewgappi=5
+    overviewgappi=15
     overviewgappo=30
 
     # Misc
@@ -134,7 +136,7 @@ in {
     enable_floating_snap=1
     snap_distance=50
     cursor_size=24
-    cursor_theme=Yaru
+    cursor_theme=oreo_spark_pink_cursors
     cursor_hide_timeout=0
     drag_tile_to_tile=1
     single_scratchpad=1
@@ -168,11 +170,11 @@ in {
     # Appearance (gaps and borders)
     gappih=20
     gappiv=20
-    gappoh=20
-    gappov=20
+    gappoh=10
+    gappov=10
     scratchpad_width_ratio=0.8
     scratchpad_height_ratio=0.9
-    borderpx=2
+    borderpx=3
 
     # Theme colors
     rootcolor=${rootColor}

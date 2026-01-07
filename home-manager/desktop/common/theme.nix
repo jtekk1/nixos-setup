@@ -3,6 +3,7 @@
 let
   customIcons = pkgs.callPackage ../../../home-manager/assets/icons { };
   colors = config.theme.colors;
+  nixSetupsPath = "${config.home.homeDirectory}/NixSetup";
 in
 {
   # Theme packages (fonts are provided by system/defaults/fonts.nix)
@@ -16,10 +17,15 @@ in
     customIcons
   ];
 
+  # Symlink custom cursor themes to icons directory
+  home.file.".local/share/icons".source =
+    config.lib.file.mkOutOfStoreSymlink
+    "${nixSetupsPath}/home-manager/assets/mouse-icons";
+
   # Cursor configuration
   home.pointerCursor = {
-    name = "Yaru";
-    package = pkgs.yaru-theme;
+    name = "oreo_spark_pink_cursors";
+    package = null;  # Using custom cursors from symlinked directory
     size = 24;
     gtk.enable = true;
     x11.enable = true;
@@ -27,7 +33,7 @@ in
 
   # Session variables (minimal, compositor-agnostic)
   home.sessionVariables = {
-    XCURSOR_THEME = "Yaru";
+    XCURSOR_THEME = "oreo_spark_pink_cursors";
     XCURSOR_SIZE = "24";
 
     # Qt/GTK Wayland hints
@@ -43,8 +49,8 @@ in
     enable = true;
 
     cursorTheme = {
-      name = "Yaru";
-      package = pkgs.yaru-theme;
+      name = "oreo_spark_pink_cursors";
+      package = null;  # Using custom cursors from symlinked directory
       size = 24;
     };
 
@@ -125,7 +131,7 @@ in
   dconf.enable = true;
   dconf.settings = {
     "org/gnome/desktop/interface" = {
-      cursor-theme = "Yaru";
+      cursor-theme = "oreo_spark_pink_cursors";
       cursor-size = 24;
       color-scheme = "prefer-dark";
       gtk-theme = "Yaru-dark";

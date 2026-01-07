@@ -53,7 +53,7 @@ let
         if [ -d "$dir" ]; then
           while IFS= read -r -d $'\0' file; do
             wallpapers+=("$file")
-          done < <(find "$dir" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" -o -iname "*.bmp" -o -iname "*.webp" \) -print0 2>/dev/null)
+          done < <(find -L "$dir" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" -o -iname "*.bmp" -o -iname "*.webp" \) -print0 2>/dev/null)
         fi
       done
 
@@ -176,7 +176,7 @@ let
             if [[ "$(basename "$file")" == *"$pattern"* ]]; then
               themed_wallpapers+=("$file")
             fi
-          done < <(find "$dir" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" \) -print0 2>/dev/null)
+          done < <(find -L "$dir" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" \) -print0 2>/dev/null)
         fi
       done
 
