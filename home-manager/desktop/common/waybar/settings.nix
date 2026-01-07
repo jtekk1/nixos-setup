@@ -23,17 +23,22 @@ let
   sepLeft = if pl.separators.inverted then sepStyle.right else sepStyle.left;
 
   # Center module characters (sep01 = right →, sep10 = left ←)
-  centerStyle = if pl.center.use == "tails" then powerlineChars.${pl.caps.style} else sepStyle;
-  center01 = centerStyle.right;  # points right →
-  center10 = centerStyle.left;   # points left ←
+  centerStyle = if pl.center.use == "tails" then
+    powerlineChars.${pl.caps.style}
+  else
+    sepStyle;
+  center01 = centerStyle.right; # points right →
+  center10 = centerStyle.left; # points left ←
 
   # Center module names based on config
-  centerLeftName = if pl.center.use == "tails"
-    then (if pl.center.inverted then "custom/tails01" else "custom/tails10")
-    else (if pl.center.inverted then "custom/sep01" else "custom/sep10");
-  centerRightName = if pl.center.use == "tails"
-    then (if pl.center.inverted then "custom/tails10" else "custom/tails01")
-    else (if pl.center.inverted then "custom/sep10" else "custom/sep01");
+  centerLeftName = if pl.center.use == "tails" then
+    (if pl.center.inverted then "custom/tails01" else "custom/tails10")
+  else
+    (if pl.center.inverted then "custom/sep01" else "custom/sep10");
+  centerRightName = if pl.center.use == "tails" then
+    (if pl.center.inverted then "custom/tails10" else "custom/tails01")
+  else
+    (if pl.center.inverted then "custom/sep10" else "custom/sep01");
 in {
   programs.waybar.settings = {
     mainBar = {
@@ -55,14 +60,17 @@ in {
         ++ (if isDeepspace then [ "custom/monitor-toggle" ] else [ ])
         ++ (if isDeepspace && pl.enable then [ "custom/sep-1T" ] else [ ]);
 
-      modules-center = (if pl.enable then [ centerLeftName ] else [])
+      modules-center = (if pl.enable then [ "custom/sep-T2-l" ] else [ ])
         ++ [ "ext/workspaces" ]
-        ++ (if pl.enable then [ centerRightName ] else []);
+        ++ (if pl.enable then [ "custom/sep-T2-r" ] else [ ]);
 
-      modules-right = [ "tray" "bluetooth" ]
-        # Right to left: sep-XY means bg=X, fg=Y
-        # Deepspace: sep-T1 -> volume(1) -> sep-31-r -> weather(3) -> sep-32-r -> date(2) -> sep-21-r -> clock(1)
-        # Thinkpad: sep-T2 -> volume(2) -> sep-21-r -> weather(1) -> sep-13-r -> battery(3) -> sep-32-r -> date(2) -> sep-21-r2 -> clock(1)
+      modules-right = [
+        "tray"
+        "bluetooth"
+      ]
+      # Right to left: sep-XY means bg=X, fg=Y
+      # Deepspace: sep-T1 -> volume(1) -> sep-31-r -> weather(3) -> sep-32-r -> date(2) -> sep-21-r -> clock(1)
+      # Thinkpad: sep-T2 -> volume(2) -> sep-21-r -> weather(1) -> sep-13-r -> battery(3) -> sep-32-r -> date(2) -> sep-21-r2 -> clock(1)
         ++ (if isDeepspace && pl.enable then [ "custom/sep-T1" ] else [ ])
         ++ (if isThinkpad && pl.enable then [ "custom/sep-T2" ] else [ ])
         ++ [ "pulseaudio" ]
@@ -73,8 +81,7 @@ in {
         ++ (if isThinkpad then [ "battery" ] else [ ])
         ++ (if pl.enable then [ "custom/sep-32-r" ] else [ ])
         ++ [ "custom/date" ]
-        ++ (if pl.enable then [ "custom/sep-21-r2" ] else [ ])
-        ++ [ "clock" ]
+        ++ (if pl.enable then [ "custom/sep-21-r2" ] else [ ]) ++ [ "clock" ]
         ++ (if pl.enable then [ "custom/right-cap" ] else [ ]);
 
       # Workspaces
@@ -87,7 +94,7 @@ in {
         sort-by-id = true;
         format-icons = {
           default = "";
-          active = "";
+          active = "";
           urgent = "󰀦";
         };
       };
@@ -445,24 +452,13 @@ in {
       };
 
       # Center separators (for workspace module)
-      "custom/sep01" = {
-        format = center01;  # points right →
+      "custom/sep-T2-l" = {
+        format = sepLeft; # points left ←
         tooltip = false;
       };
 
-      "custom/sep10" = {
-        format = center10;  # points left ←
-        tooltip = false;
-      };
-
-      # Center tails (alternative style for workspace module)
-      "custom/tails01" = {
-        format = center01;  # points right →
-        tooltip = false;
-      };
-
-      "custom/tails10" = {
-        format = center10;  # points left ←
+      "custom/sep-T2-r" = {
+        format = sepRight; # points right →
         tooltip = false;
       };
 

@@ -305,33 +305,9 @@ let
 
     /* === CENTER MODULES === */
 
-    /* Center separators - sep10 on left (←), sep01 on right (→) */
-    #custom-sep10 {
-      background-color: ${colors.accent_secondary};
-      color: transparent;
-      font-size: ${toString pl.separator.size}px;
-      padding: 0;
-      margin: ${pl.segment.margin};
-    }
-
-    #custom-sep01 {
-      background-color: transparent;
-      color: ${colors.accent_secondary};
-      font-size: ${toString pl.separator.size}px;
-      padding: 0;
-      margin: ${pl.segment.margin};
-    }
-
-    /* Center tails - tails10 on left (←), tails01 on right (→) */
-    #custom-tails10 {
-      background-color: ${colors.accent_secondary};
-      color: transparent;
-      font-size: ${toString pl.separator.size}px;
-      padding: 0;
-      margin: ${pl.segment.margin};
-    }
-
-    #custom-tails01 {
+    /* Center separators - sep-T2-l (←) on left, sep-T2-r (→) on right */
+    #custom-sep-T2-l,
+    #custom-sep-T2-r {
       background-color: transparent;
       color: ${colors.accent_secondary};
       font-size: ${toString pl.separator.size}px;
@@ -347,23 +323,34 @@ let
     #workspaces button {
       background-color: transparent;
       color: ${colors.bg_secondary};
-      opacity: 0.35;
+      opacity: 0.9;
       padding: 0 8px;
       margin: 0 2px;
       border-radius: 0;
+      box-shadow: none;
+    }
+
+    #workspaces button:hover {
+      background-color: ${colors.bg_secondary};
+      color: ${colors.accent_secondary};
+      opacity: 1.0;
     }
 
     #workspaces button.active {
+      background-color: transparent;
       opacity: 1.0;
       color: ${colors.bg_primary};
+      box-shadow: none;
     }
 
     #workspaces button.hidden {
-      opacity: 0.95;
+      background-color: transparent;
+      opacity: 0.35;
       color: ${colors.bg_tertiary};
     }
 
     #workspaces button.urgent {
+      background-color: transparent;
       color: ${colors.color5};
       opacity: 1.0;
     }
