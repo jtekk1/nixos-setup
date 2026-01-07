@@ -11,6 +11,7 @@ in
       ./bash
       ./ssh.nix
       ./tools
+      ./extras
     ]
     ++ lib.optionals isDesktopEnv [
       ./scripts

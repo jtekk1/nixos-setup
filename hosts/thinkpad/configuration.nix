@@ -37,6 +37,11 @@ in {
   # Touchpad inputs
   services.libinput.enable = true;
 
+  # ThinkPad-specific power management
+  environment.systemPackages = with pkgs; [
+    tpacpi-bat # ThinkPad battery threshold control
+  ];
+
   # Enable AppImage support and Cursor IDE
   programs.appimages = {
     enable = true;
