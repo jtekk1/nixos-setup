@@ -386,19 +386,22 @@ let
       padding: 0 10px;
     }
 
-    /* Bluetooth - transparent */
+    /* Bluetooth - color 3 (thinkpad powerline) */
     #bluetooth {
-      background-color: transparent;
-      color: ${colors.fg_primary};
+      background-color: ${colors.accent_tertiary};
+      color: ${colors.bg_tertiary};
     }
 
     #bluetooth.connected {
-      color: ${colors.accent_primary};
+      background-color: ${colors.accent_tertiary};
+      color: ${colors.bg_tertiary};
     }
 
     #bluetooth.off,
     #bluetooth.disabled {
-      color: ${colors.fg_dim};
+      background-color: ${colors.accent_tertiary};
+      color: ${colors.bg_tertiary};
+      opacity: 0.6;
     }
 
     /* Transparent to color separators - bg=T, fg=color */
@@ -413,6 +416,14 @@ let
     #custom-sep-T2 {
       background-color: transparent;
       color: ${colors.accent_secondary};
+      font-size: ${toString pl.separator.size}px;
+      padding: 0;
+      margin: ${pl.segment.margin};
+    }
+
+    #custom-sep-T3 {
+      background-color: transparent;
+      color: ${colors.accent_tertiary};
       font-size: ${toString pl.separator.size}px;
       padding: 0;
       margin: ${pl.segment.margin};

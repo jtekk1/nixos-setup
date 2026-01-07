@@ -66,13 +66,15 @@ in {
 
       modules-right = [
         "tray"
-        "bluetooth"
       ]
       # Right to left: sep-XY means bg=X, fg=Y
       # Deepspace: sep-T1 -> volume(1) -> sep-31-r -> weather(3) -> sep-32-r -> date(2) -> sep-21-r -> clock(1)
-      # Thinkpad: sep-T2 -> volume(2) -> sep-21-r -> weather(1) -> sep-13-r -> battery(3) -> sep-32-r -> date(2) -> sep-21-r2 -> clock(1)
+      # Thinkpad: sep-T3 -> bluetooth(3) -> sep-32 -> volume(2) -> sep-21-r -> weather(1) -> sep-13-r -> battery(3) -> sep-32-r -> date(2) -> sep-21-r2 -> clock(1)
         ++ (if isDeepspace && pl.enable then [ "custom/sep-T1" ] else [ ])
-        ++ (if isThinkpad && pl.enable then [ "custom/sep-T2" ] else [ ])
+        ++ (if isThinkpad && pl.enable then [ "custom/sep-T3" ] else [ ])
+        ++ (if isThinkpad then [ "bluetooth" ] else [ ])
+        ++ (if isThinkpad && pl.enable then [ "custom/sep-32" ] else [ ])
+        ++ (if isDeepspace && pl.enable then [ ] else [ ])
         ++ [ "pulseaudio" ]
         ++ (if isDeepspace && pl.enable then [ "custom/sep-31-r" ] else [ ])
         ++ (if isThinkpad && pl.enable then [ "custom/sep-21-r" ] else [ ])
@@ -406,6 +408,11 @@ in {
       };
 
       "custom/sep-T2" = {
+        format = sepLeft;
+        tooltip = false;
+      };
+
+      "custom/sep-T3" = {
         format = sepLeft;
         tooltip = false;
       };
