@@ -42,7 +42,7 @@ in {
       "github.com" = {
         hostname = "github.com";
         user = "git";
-        identityFile = "~/.ssh/ghkey";
+        identityFile = "~/.ssh/nixos-deploy";
         identitiesOnly = true;
       };
 
