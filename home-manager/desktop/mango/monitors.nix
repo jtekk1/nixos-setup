@@ -1,7 +1,8 @@
 { pkgs, osConfig ? null, ... }:
 
 let
-  hostname = if osConfig != null then osConfig.networking.hostName else "unknown";
+  hostname =
+    if osConfig != null then osConfig.networking.hostName else "unknown";
 
   # Host-specific monitor configurations
   monitorRules = {
@@ -31,8 +32,9 @@ let
   # Fallback for unknown hosts
   defaultRules = ''
     # Default monitor rule
-    monitorrule=*,0.50,1,tile,0,1,0,0,1920,1080,60
+    # monitorrule=*,0.50,1,tile,0,1,0,0,1920,1080,60
   '';
 in {
-  wayland.windowManager.mango.settings = monitorRules.${hostname} or defaultRules;
+  wayland.windowManager.mango.settings =
+    monitorRules.${hostname} or defaultRules;
 }

@@ -10,6 +10,7 @@ let
     builtins.replaceStrings [ "\n" ] [ "" ] (builtins.readFile /etc/hostname);
   isThinkpad = hostname == "thinkpad";
   isDeepspace = hostname == "deepspace";
+  isDeli = hostname == "deli";
   # Use mango format (0xRRGGBBaa) for colors
   useOverrides = config.theme.name == "neuro-fusion" && colors.mangoOverrides
     != null;

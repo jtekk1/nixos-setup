@@ -42,9 +42,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixos-hardware = {
-      url = "github:NixOS/nixos-hardware/master";
-    };
+    nixos-hardware = { url = "github:NixOS/nixos-hardware/master"; };
   };
 
   outputs = { self, nixpkgs, home-manager, colmena, sops-nix, disko
@@ -158,13 +156,15 @@
         # Desktop configuration (default theme)
         "deepspace" = mkSystem { hostname = "deepspace"; };
         "thinkpad" = mkSystem { hostname = "thinkpad"; };
+        "deli" = mkSystem { hostname = "deli"; };
 
         # Server configurations
         # Only used as part of initial setups (nixos-anywhere)
         "beelink" = mkServer { hostname = "beelink"; };
         "mini-me" = mkServer { hostname = "mini-me"; };
         "tank" = mkServer { hostname = "tank"; };
-      } // (mkThemedConfigs "deepspace") // (mkThemedConfigs "thinkpad");
+      } // (mkThemedConfigs "deepspace") // (mkThemedConfigs "thinkpad")
+      // (mkThemedConfigs "deli");
 
       colmena = import ./hive.nix {
         inherit nixpkgs home-manager disko inputs system_arch;
