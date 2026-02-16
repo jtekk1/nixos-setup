@@ -3,6 +3,8 @@
 {
   programs.bash.initExtra = ''
     # Initialize ble.sh (Bash Line Editor) - must be first
+    ble-import integration/fzf-competion
+    ble-import integration/fzf-key-bindings
     source ${pkgs.blesh}/share/blesh/ble.sh
 
     set +h

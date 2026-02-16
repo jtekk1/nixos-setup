@@ -11,6 +11,7 @@
     plocate
     procps # Standard ps, top, and other process utilities
     gcc # GNU Compiler Collection
+    ncdu
   ];
 
   system.stateVersion = "25.11";

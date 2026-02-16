@@ -15,9 +15,7 @@
   networking.wireless.iwd = {
     enable = true;
     settings = {
-      General = {
-        EnableNetworkConfiguration = true;
-      };
+      General = { EnableNetworkConfiguration = true; };
       Network = {
         EnableIPv6 = true;
         RoutePriorityOffset = 300;
@@ -35,14 +33,15 @@
     serviceConfig = {
       Type = "oneshot";
       # Unblock RF-kill (wifi + bluetooth), restart iwd, wait for it to be ready, then restart dhcpcd
-      ExecStart = "${pkgs.bash}/bin/bash -c '${pkgs.util-linux}/bin/rfkill unblock wifi bluetooth && sleep 1 && ${pkgs.systemd}/bin/systemctl restart iwd.service && sleep 3 && ${pkgs.systemd}/bin/systemctl restart dhcpcd.service'";
+      ExecStart =
+        "${pkgs.bash}/bin/bash -c '${pkgs.util-linux}/bin/rfkill unblock wifi bluetooth && sleep 1 && ${pkgs.systemd}/bin/systemctl restart iwd.service && sleep 3 && ${pkgs.systemd}/bin/systemctl restart dhcpcd.service'";
     };
   };
 
   environment.systemPackages = with pkgs; [
     wiremix
-    bluetui      # TUI for managing bluetooth
-    blanket      # Ambient sound / white noise app
+    bluetui # TUI for managing bluetooth
+    blanket # Ambient sound / white noise app
     iwd
     impala
     imv

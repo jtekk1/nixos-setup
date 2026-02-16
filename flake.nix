@@ -3,7 +3,7 @@
 
   inputs = {
 
-    nixpkgs = { url = "github:NixOS/nixpkgs/nixos-25.11"; };
+    nixpkgs = { url = "github:NixOS/nixpkgs/nixos-unstable"; };
 
     nixpkgs-stable = { url = "github:NixOS/nixpkgs/nixos-25.11"; };
 
@@ -34,11 +34,6 @@
 
     nixvim = {
       url = "github:nix-community/nixvim/nixos-25.11";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    cutacha = {
-      url = "git+https://git.jtekk.dev/TekkOS/cutacha";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

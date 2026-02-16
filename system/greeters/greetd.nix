@@ -7,7 +7,7 @@
     settings = {
       default_session = {
         command =
-          "${pkgs.tuigreet}/bin/tuigreet --time --remember --remember-session --cmd mango";
+          "${pkgs.tuigreet}/bin/tuigreet -tr --remember-session --cmd mango --asterisks -g '!!! Welcoem To NixOS !!!'";
         user = "greeter";
       };
     };

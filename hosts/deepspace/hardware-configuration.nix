@@ -5,47 +5,117 @@
 
 {
   imports =
-    [
-      (modulesPath + "/installer/scan/not-detected.nix")
-      ./snapshot.nix
-    ];
+    [ (modulesPath + "/installer/scan/not-detected.nix") ./snapshot.nix ];
 
-  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
+  boot.initrd.availableKernelModules =
+    [ "nvme" "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
   boot.initrd.kernelModules = [ "btrfs" "nvme" ];
   boot.supportedFilesystems = [ "btrfs" "nvme" ];
+  boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-label/NIXOS_ROOT";
-      fsType = "btrfs";
-      options = [ 
-      "subvol=@root"
-      "compress=zstd"
+  fileSystems."/" = {
+    device = "/dev/disk/by-uuid/f09a2fd1-4385-48b9-ad3a-d381709cd5a5";
+    fsType = "btrfs";
+    options = [
+      "subvol=@"
+      "compress=zstd:1"
       "noatime"
       "ssd"
-      ];
-    };
+      "discard=async"
+      "space_cache=v2"
+    ];
+  };
 
-  fileSystems."/home" =
-    { device = "/dev/disk/by-label/NIXOS_ROOT";
-      fsType = "btrfs";
-      options = [ "subvol=@home" "compress=zstd" "noatime" "ssd" ];
-    };
+  fileSystems."/home" = {
+    device = "/dev/disk/by-uuid/f09a2fd1-4385-48b9-ad3a-d381709cd5a5";
+    fsType = "btrfs";
+    options = [
+      "subvol=@home"
+      "compress=zstd:1"
+      "noatime"
+      "ssd"
+      "discard=async"
+      "space_cache=v2"
+    ];
+  };
 
-  fileSystems."/nix" =
-    { device = "/dev/disk/by-label/NIXOS_ROOT";
-      fsType = "btrfs";
-      options = [ "subvol=@nix" "compress=zstd" "noatime" "ssd" "nosuid" "nodev" ];
-    };
+  fileSystems."/var/log" = {
+    device = "/dev/disk/by-uuid/f09a2fd1-4385-48b9-ad3a-d381709cd5a5";
+    fsType = "btrfs";
+    options = [
+      "subvol=@log"
+      "compress=zstd:1"
+      "noatime"
+      "ssd"
+      "discard=async"
+      "space_cache=v2"
+    ];
+  };
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-label/NIXOS_EFI";
-      fsType = "vfat";
-    };
+  fileSystems."/var/cache" = {
+    device = "/dev/disk/by-uuid/f09a2fd1-4385-48b9-ad3a-d381709cd5a5";
+    fsType = "btrfs";
+    options = [
+      "subvol=@cache"
+      "compress=zstd:1"
+      "noatime"
+      "ssd"
+      "discard=async"
+      "space_cache=v2"
+    ];
+  };
+
+  fileSystems."/var/tmp" = {
+    device = "/dev/disk/by-uuid/f09a2fd1-4385-48b9-ad3a-d381709cd5a5";
+    fsType = "btrfs";
+    options = [
+      "subvol=@tmp"
+      "compress=zstd:1"
+      "noatime"
+      "ssd"
+      "discard=async"
+      "space_cache=v2"
+    ];
+  };
+
+  fileSystems."/.snapshots" = {
+    device = "/dev/disk/by-uuid/f09a2fd1-4385-48b9-ad3a-d381709cd5a5";
+    fsType = "btrfs";
+    options = [
+      "subvol=@snapshots"
+      "compress=zstd:1"
+      "noatime"
+      "ssd"
+      "discard=async"
+      "space_cache=v2"
+    ];
+  };
+
+  fileSystems."/nix/store" = {
+    device = "/dev/disk/by-uuid/f09a2fd1-4385-48b9-ad3a-d381709cd5a5";
+    fsType = "btrfs";
+    options = [
+      "subvol=@nixstore"
+      "compress=zstd:1"
+      "noatime"
+      "ssd"
+      "discard=async"
+      "space_cache=v2"
+      "nosuid"
+      "nodev"
+    ];
+  };
+
+  fileSystems."/boot" = {
+    device = "/dev/disk/by-uuid/7B3A-7DE9";
+    fsType = "vfat";
+    options = [ "fmask=0022" "dmask=0022" ];
+  };
+
   swapDevices = [ ];
 
-  networking.useDHCP = lib.mkDefault true;
-
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.amd.updateMicrocode =
+    lib.mkDefault config.hardware.enableRedistributableFirmware;
 }

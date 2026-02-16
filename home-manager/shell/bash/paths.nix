@@ -7,5 +7,7 @@
     "${config.home.homeDirectory}/.local/bin"
     "${config.home.homeDirectory}/bin"
     "${config.home.homeDirectory}/scripts"
+    "${config.home.homeDirectory}/.cargo/bin"
+
   ];
 }

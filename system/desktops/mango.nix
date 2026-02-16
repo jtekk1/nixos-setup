@@ -3,8 +3,7 @@
 let
   cfg = config.jtekk.desktop-env;
   isDesktop = cfg != "server";
-in
-{
+in {
   imports = [ inputs.mangowc.nixosModules.mango ];
 
   config = lib.mkIf isDesktop {
